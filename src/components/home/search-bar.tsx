@@ -13,14 +13,14 @@ export function SearchBar() {
       onClick={() => router.push("/search")}
       className="
         flex w-full items-center gap-3
-        rounded-2xl bg-gray-50 px-4 py-3.5
-        border border-gray-100
+        rounded-2xl bg-white px-4 py-3.5
+        shadow-sm shadow-black/5
         text-left
-        transition-colors active:bg-gray-100
+        transition-all active:scale-[0.98] active:shadow-none
       "
     >
-      <Search size={20} className="shrink-0 text-gray-400" />
-      <span className="text-base text-gray-400">
+      <Search size={18} className="shrink-0 text-[#45B8C0]" />
+      <span className="flex-1 text-sm text-gray-400">
         Что ищем?
       </span>
     </button>

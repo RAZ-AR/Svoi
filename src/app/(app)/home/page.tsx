@@ -1,7 +1,8 @@
-// Svoi — Home screen: search + categories + feed
+// Svoi — Home screen: search + promo + categories + feed
 import { Suspense } from "react";
 import { AppHeader } from "@/components/layout/app-header";
 import { SearchBar } from "@/components/home/search-bar";
+import { PromoBanner, PromoStrip } from "@/components/home/promo-banner";
 import {
   CategoriesCarousel,
   CategoriesCarouselSkeleton,
@@ -17,16 +18,21 @@ interface HomePageProps {
 export default async function HomePage({ searchParams }: HomePageProps) {
   const { category } = await searchParams;
 
-  // Categories are static enough to fetch on the server
   const categories = await getCategories();
 
   return (
     <div className="flex flex-col">
       <AppHeader />
 
-      <div className="flex flex-col gap-5 px-4 pb-6 pt-1">
-        {/* ── Big search bar ────────────────────────────────────────────── */}
+      <div className="flex flex-col gap-4 px-4 pb-6 pt-1">
+        {/* ── Search bar ───────────────────────────────────────────────── */}
         <SearchBar />
+
+        {/* ── Promo strip ──────────────────────────────────────────────── */}
+        {!category && <PromoStrip />}
+
+        {/* ── Hero promo card ──────────────────────────────────────────── */}
+        {!category && <PromoBanner />}
 
         {/* ── Category carousel ────────────────────────────────────────── */}
         <section>
@@ -41,11 +47,9 @@ export default async function HomePage({ searchParams }: HomePageProps) {
             <h2 className="text-base font-semibold text-gray-900">
               {category ? "Объявления" : "Сейчас"}
             </h2>
-            {/* Map button — floating pill */}
             <MapButton />
           </div>
 
-          {/* Feed is client-side for infinite scroll + filters */}
           <ListingsFeed
             filters={category ? { categorySlug: category } : {}}
           />

@@ -19,27 +19,27 @@
 
 @layer base {
   :root {
-    /* ── Light theme (default) ─────────────────────────────────────────────── */
-    --background:   0 0% 100%;       /* pure white */
-    --foreground:   222 47% 11%;     /* near-black */
-    --card:         0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    /* ── Light theme — sage + teal (reference design) ─────────────────────── */
+    --background:   162 10% 76%;     /* sage mint #BEC8C4 — page background */
+    --foreground:   220 20% 12%;     /* near-black */
+    --card:         0 0% 100%;       /* white cards */
+    --card-foreground: 220 20% 12%;
     --popover:      0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary:      224 88% 60%;     /* svoi blue #3b6bff */
+    --popover-foreground: 220 20% 12%;
+    --primary:      185 48% 52%;     /* teal #45B8C0 */
     --primary-foreground: 0 0% 100%;
-    --secondary:    220 14% 96%;     /* very light grey */
-    --secondary-foreground: 222 47% 11%;
-    --muted:        220 14% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent:       220 14% 96%;
-    --accent-foreground: 222 47% 11%;
+    --secondary:    162 12% 92%;     /* very light sage */
+    --secondary-foreground: 220 20% 12%;
+    --muted:        162 8% 92%;
+    --muted-foreground: 210 10% 48%;
+    --accent:       270 65% 83%;     /* soft purple #CAB0F4 */
+    --accent-foreground: 220 20% 12%;
     --destructive:  0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border:       220 13% 91%;
-    --input:        220 13% 91%;
-    --ring:         224 88% 60%;
-    --radius:       0.75rem;         /* 12px – comfortable roundness */
+    --border:       162 8% 88%;
+    --input:        0 0% 100%;
+    --ring:         185 48% 52%;
+    --radius:       1rem;            /* 16px – generous roundness */
   }
 
   * {

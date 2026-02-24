@@ -28,7 +28,7 @@ export function ListingCard({
       href={`/listings/${listing.id}`}
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-2xl bg-white",
-        "border border-gray-100 shadow-sm",
+        "shadow-md shadow-black/8",
         "transition-transform duration-150 active:scale-[0.97]",
         className
       )}

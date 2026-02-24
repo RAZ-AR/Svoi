@@ -14,7 +14,7 @@ export function AppHeader({
   rightSlot,
 }: AppHeaderProps) {
   return (
-    <header className="flex h-14 items-center justify-between px-5">
+    <header className="flex h-14 items-center justify-between px-5 bg-transparent">
       {showLogo ? (
         <Link href="/home" className="flex items-baseline gap-1.5">
           <span className="text-xl font-bold tracking-tight text-gray-900">

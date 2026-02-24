@@ -44,7 +44,7 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
       </div>
 
       {/* Fade on right edge to hint at more cards */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-[#BEC8C4]" />
     </div>
   );
 }
@@ -70,8 +70,8 @@ function CategoryCard({
         "border transition-all duration-150 active:scale-95",
         // Active state
         isActive
-          ? "border-primary bg-primary text-primary-foreground shadow-md shadow-primary/20"
-          : "border-gray-100 bg-white text-gray-700 hover:border-gray-200 hover:bg-gray-50"
+          ? "border-[#45B8C0] bg-[#45B8C0] text-white shadow-md shadow-[#45B8C0]/30"
+          : "border-transparent bg-white text-gray-700 shadow-sm shadow-black/6 hover:shadow-md"
       )}
     >
       <span className="text-2xl leading-none">{category.emoji ?? "📌"}</span>
