@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Početna",
+    "search": "Pretraga",
+    "chats": "Poruke",
+    "profile": "Profil"
+  },
+  "home": {
+    "search_placeholder": "Šta tražite?",
+    "section_now": "Upravo sada",
+    "section_listings": "Oglasi",
+    "promo_tag": "Novi oglasi",
+    "promo_title": "Pronađi svoje\nblizu kuće",
+    "promo_subtitle": "Hiljade oglasa u tvom gradu",
+    "promo_browse": "Pregledaj",
+    "promo_post": "Objavi oglas",
+    "promo_strip": "Objavi prvi oglas",
+    "promo_strip_free": "besplatno"
+  },
+  "login": {
+    "tagline": "Vaša lokalna pijaca u Beogradu",
+    "description": "Prijavite se Google nalogom da biste objavljivali oglase i ćaskali",
+    "tg_hint": "Otvorite putem Telegrama za automatsku prijavu ✨",
+    "sign_in_google": "Prijavite se Google nalogom"
+  },
+  "common": {
+    "loading": "Učitavanje…",
+    "error": "Greška",
+    "retry": "Pokušaj ponovo",
+    "save": "Sačuvaj",
+    "cancel": "Otkaži",
+    "delete": "Obriši",
+    "back": "Nazad",
+    "done": "Gotovo",
+    "next": "Dalje →",
+    "free": "Besplatno",
+    "negotiable": "Po dogovoru",
+    "just_now": "upravo sada",
+    "min_ago": "pre {n} min.",
+    "hr_ago": "pre {n} č.",
+    "yesterday": "juče",
+    "days_ago": "pre {n} dana",
+    "reset": "Poništi",
+    "apply": "Primeni",
+    "all_belgrade": "Ceo Beograd",
+    "all_categories": "Sve kategorije",
+    "any": "Bilo koja",
+    "from": "od",
+    "to": "do"
+  },
+  "search": {
+    "filters": "Filteri",
+    "category": "Kategorija",
+    "price": "Cena",
+    "district": "Opština",
+    "sort": "Sortiranje",
+    "sort_newest": "Najnoviji",
+    "sort_price_asc": "Najjeftiniji",
+    "sort_price_desc": "Najskuplji",
+    "sort_popular": "Popularni"
+  },
+  "listing": {
+    "edit": "Izmeni",
+    "write_seller": "Piši prodavcu",
+    "write": "Piši",
+    "opening": "Otvaramo…",
+    "status_active": "Aktivno",
+    "status_active_hint": "Vidljivo svima",
+    "status_paused": "Pauzirano",
+    "status_paused_hint": "Skriveno od pretrage, sačuvano",
+    "status_sold": "Prodato",
+    "status_sold_hint": "Označeno kao prodato",
+    "delete": "Obriši",
+    "delete_hint": "Ne može se oporaviti",
+    "no_results": "Nije moguće učitati oglase"
+  },
+  "profile": {
+    "title": "Profil",
+    "listings": "Oglasi",
+    "active": "Aktivni",
+    "views": "Pregledi",
+    "my_listings": "Moji oglasi",
+    "active_count": "{n} aktivnih",
+    "my_chats": "Moje poruke",
+    "favorites": "Omiljeni",
+    "edit_profile": "Izmeni profil",
+    "logout": "Odjavi se",
+    "language": "Jezik",
+    "language_title": "Jezik interfejsa",
+    "version": "Svoi v0.1.0 · Lokalna pijaca u Beogradu"
+  },
+  "wizard": {
+    "step_category": "Kategorija",
+    "step_photos": "Fotografije",
+    "step_details": "Detalji",
+    "step_address": "Adresa",
+    "title_label": "Naslov",
+    "title_placeholder": "Npr.: IKEA sofa u odličnom stanju",
+    "title_min": "Najmanje 3 karaktera",
+    "description_label": "Opis",
+    "description_placeholder": "Opišite detaljno: stanje, dimenzije, istorija…",
+    "price_label": "Cena",
+    "price_placeholder": "0 = besplatno, prazno = po dogovoru",
+    "price_hint": "Ostavite prazno — kupac će videti \"Po dogovoru\"",
+    "event_date": "📅 Datum i vreme susreta",
+    "publishing": "Objavljujemo…",
+    "publish": "Objavi ✓"
+  },
+  "chats": {
+    "title": "Poruke",
+    "empty": "Još nema poruka",
+    "message_placeholder": "Poruka…"
+  },
+  "error": {
+    "something_wrong": "Nešto je pošlo po krivu",
+    "reload": "Pokušajte ponovo učitati stranicu"
+  },
+  "onboarding": {
+    "saving": "Čuvamo…",
+    "address_placeholder": "Ili upiši sam: «Novi Beograd, Blok 45»"
+  }
+}

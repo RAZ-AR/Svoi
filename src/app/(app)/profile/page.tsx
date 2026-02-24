@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ChevronRight, LayoutList, LogOut,
-  Settings, Star, MessageCircle,
+  Settings, Star, MessageCircle, Globe,
 } from "lucide-react";
 import { AppHeader } from "@/components/layout/app-header";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -14,11 +14,14 @@ import { useMyStats } from "@/hooks/use-my-listings";
 import { createClient } from "@/lib/supabase/client";
 import { useUserStore } from "@/store/user.store";
 import { cn } from "@/lib/utils";
+import { useLocale, useT, type Locale } from "@/lib/i18n";
 
 export default function ProfilePage() {
   const auth    = useAuth();
   const router  = useRouter();
   const { data: stats } = useMyStats();
+  const t = useT();
+  const { locale, setLocale, locales, label, flag } = useLocale();
 
   if (auth.status !== "authenticated") return null;
   const user = auth.user;
@@ -32,7 +35,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
-      <AppHeader title="Профиль" showLogo={false} />
+      <AppHeader title={t("profile.title")} showLogo={false} />
 
       {/* ── Profile card ──────────────────────────────────────────────────── */}
       <div className="mx-4 mt-2 overflow-hidden rounded-3xl bg-white shadow-sm">
@@ -76,11 +79,10 @@ export default function ProfilePage() {
           </Link>
         </div>
 
-        {/* Stats row */}
         <div className="flex divide-x divide-gray-100 border-t border-gray-100">
-          <StatCell label="Объявлений" value={stats?.listingsCount ?? 0} />
-          <StatCell label="Активных"   value={stats?.activeCount   ?? 0} />
-          <StatCell label="Просмотров" value={formatViews(stats?.totalViews ?? 0)} />
+          <StatCell label={t("profile.listings")} value={stats?.listingsCount ?? 0} />
+          <StatCell label={t("profile.active")}   value={stats?.activeCount   ?? 0} />
+          <StatCell label={t("profile.views")}    value={formatViews(stats?.totalViews ?? 0)} />
         </div>
       </div>
 
@@ -88,22 +90,22 @@ export default function ProfilePage() {
       <div className="mx-4 mt-4 overflow-hidden rounded-3xl bg-white shadow-sm">
         <MenuRow
           icon={<LayoutList size={18} />}
-          label="Мои объявления"
-          hint={stats?.activeCount ? `${stats.activeCount} активных` : undefined}
+          label={t("profile.my_listings")}
+          hint={stats?.activeCount ? t("profile.active_count", { n: stats.activeCount }) : undefined}
           href="/listings/my"
           iconBg="bg-blue-50 text-blue-500"
         />
         <div className="h-px bg-gray-50" />
         <MenuRow
           icon={<MessageCircle size={18} />}
-          label="Мои чаты"
+          label={t("profile.my_chats")}
           href="/chats"
           iconBg="bg-green-50 text-green-500"
         />
         <div className="h-px bg-gray-50" />
         <MenuRow
           icon={<Star size={18} />}
-          label="Избранное"
+          label={t("profile.favorites")}
           href="/favorites"
           iconBg="bg-amber-50 text-amber-500"
         />
@@ -113,10 +115,39 @@ export default function ProfilePage() {
       <div className="mx-4 mt-4 overflow-hidden rounded-3xl bg-white shadow-sm">
         <MenuRow
           icon={<Settings size={18} />}
-          label="Редактировать профиль"
+          label={t("profile.edit_profile")}
           href="/profile/edit"
           iconBg="bg-gray-100 text-gray-500"
         />
+      </div>
+
+      {/* ── Language switcher ─────────────────────────────────────────────── */}
+      <div className="mx-4 mt-4 overflow-hidden rounded-3xl bg-white shadow-sm">
+        <div className="flex items-center gap-3 px-4 py-4">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-teal-50 text-[#45B8C0]">
+            <Globe size={18} />
+          </span>
+          <div className="flex-1">
+            <p className="text-sm font-medium text-gray-900">{t("profile.language_title")}</p>
+          </div>
+          <div className="flex gap-1.5">
+            {locales.map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setLocale(l as Locale)}
+                className={cn(
+                  "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all active:scale-95",
+                  locale === l
+                    ? "bg-[#45B8C0] text-white shadow-sm"
+                    : "bg-gray-100 text-gray-500"
+                )}
+              >
+                {flag(l as Locale)} {label(l as Locale)}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* ── Logout ────────────────────────────────────────────────────────── */}
@@ -129,13 +160,12 @@ export default function ProfilePage() {
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-red-50 text-red-500">
             <LogOut size={18} />
           </span>
-          <span className="text-sm font-medium text-red-500">Выйти</span>
+          <span className="text-sm font-medium text-red-500">{t("profile.logout")}</span>
         </button>
       </div>
 
-      {/* App version */}
       <p className="py-8 text-center text-xs text-gray-300">
-        Svoi v0.1.0 · Свой базар в Белграде
+        {t("profile.version")}
       </p>
     </div>
   );

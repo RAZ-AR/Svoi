@@ -4,6 +4,7 @@
 import { cn } from "@/lib/utils";
 import { useNewListingStore } from "@/store/new-listing.store";
 import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
+import { useT } from "@/lib/i18n";
 
 const CURRENCIES = ["EUR", "RSD", "USD"] as const;
 
@@ -13,12 +14,13 @@ interface StepDetailsProps {
 
 export function StepDetails({ onNext }: StepDetailsProps) {
   const { draft, updateDraft } = useNewListingStore();
-  const isMeetup = draft.categoryEmoji === "☕"; // meetups category
+  const isMeetup = draft.categoryEmoji === "☕";
+  const t = useT();
 
   const canProceed = draft.title.trim().length >= 3;
 
   useTelegramMainButton({
-    text:     "Далее →",
+    text:     t("common.next"),
     onClick:  onNext,
     isActive: canProceed,
   });
@@ -26,7 +28,7 @@ export function StepDetails({ onNext }: StepDetailsProps) {
   return (
     <div className="flex flex-col gap-5 px-4 py-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-900">Детали</h2>
+        <h2 className="text-xl font-bold text-gray-900">{t("wizard.step_details")}</h2>
         <p className="mt-0.5 text-sm text-gray-500">
           {draft.categoryEmoji} {draft.categoryName}
         </p>
@@ -35,13 +37,13 @@ export function StepDetails({ onNext }: StepDetailsProps) {
       {/* Title */}
       <div>
         <label className="mb-1.5 block text-sm font-medium text-gray-700">
-          Заголовок <span className="text-red-400">*</span>
+          {t("wizard.title_label")} <span className="text-red-400">*</span>
         </label>
         <input
           type="text"
           value={draft.title}
           onChange={(e) => updateDraft({ title: e.target.value })}
-          placeholder="Напр.: Диван IKEA в отличном состоянии"
+          placeholder={t("wizard.title_placeholder")}
           maxLength={120}
           className={cn(
             "w-full rounded-2xl border bg-gray-50 px-4 py-3.5 text-base text-gray-900",
@@ -54,7 +56,7 @@ export function StepDetails({ onNext }: StepDetailsProps) {
         />
         <div className="mt-1 flex justify-between">
           {draft.title.trim().length < 3 && draft.title.length > 0 && (
-            <p className="text-xs text-red-400">Минимум 3 символа</p>
+            <p className="text-xs text-red-400">{t("wizard.title_min")}</p>
           )}
           <p className="ml-auto text-xs text-gray-400">
             {draft.title.length}/120
@@ -65,12 +67,12 @@ export function StepDetails({ onNext }: StepDetailsProps) {
       {/* Description */}
       <div>
         <label className="mb-1.5 block text-sm font-medium text-gray-700">
-          Описание
+          {t("wizard.description_label")}
         </label>
         <textarea
           value={draft.description}
           onChange={(e) => updateDraft({ description: e.target.value })}
-          placeholder="Расскажите подробнее: состояние, размеры, история вещи…"
+          placeholder={t("wizard.description_placeholder")}
           rows={4}
           maxLength={2000}
           className="
@@ -88,14 +90,14 @@ export function StepDetails({ onNext }: StepDetailsProps) {
       {/* Price + currency */}
       <div>
         <label className="mb-1.5 block text-sm font-medium text-gray-700">
-          Цена
+          {t("wizard.price_label")}
         </label>
         <div className="flex gap-2">
           <input
             type="number"
             value={draft.price}
             onChange={(e) => updateDraft({ price: e.target.value })}
-            placeholder="0 — бесплатно, пусто — договорная"
+            placeholder={t("wizard.price_placeholder")}
             min={0}
             className="
               flex-1 rounded-2xl border border-gray-200 bg-gray-50
@@ -123,16 +125,13 @@ export function StepDetails({ onNext }: StepDetailsProps) {
             ))}
           </div>
         </div>
-        <p className="mt-1 text-xs text-gray-400">
-          Оставьте пустым — покупатель увидит «Договорная»
-        </p>
+        <p className="mt-1 text-xs text-gray-400">{t("wizard.price_hint")}</p>
       </div>
 
-      {/* Event date — only for meetups */}
       {isMeetup && (
         <div>
           <label className="mb-1.5 block text-sm font-medium text-gray-700">
-            📅 Дата и время встречи
+            {t("wizard.event_date")}
           </label>
           <input
             type="datetime-local"
@@ -147,7 +146,6 @@ export function StepDetails({ onNext }: StepDetailsProps) {
         </div>
       )}
 
-      {/* Fallback button */}
       <button
         type="button"
         onClick={onNext}
@@ -159,7 +157,7 @@ export function StepDetails({ onNext }: StepDetailsProps) {
             : "bg-gray-100 text-gray-400 cursor-not-allowed"
         )}
       >
-        Далее →
+        {t("common.next")}
       </button>
     </div>
   );

@@ -7,20 +7,22 @@ import { Home, Search, Plus, MessageCircle, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTelegram } from "@/components/telegram/telegram-provider";
 import { useMyChats } from "@/hooks/use-chat";
-
-const tabs = [
-  { href: "/home",         icon: Home,          label: "Главная"   },
-  { href: "/search",       icon: Search,        label: "Поиск"     },
-  { href: "/listings/new", icon: Plus,          label: null        }, // center CTA
-  { href: "/chats",        icon: MessageCircle, label: "Чаты"      },
-  { href: "/profile",      icon: User,          label: "Профиль"   },
-];
+import { useT } from "@/lib/i18n";
 
 export function BottomNav() {
   const pathname = usePathname();
   const { webApp } = useTelegram();
   const { data: chats } = useMyChats();
   const totalUnread = chats?.reduce((s, c) => s + c.unread_count, 0) ?? 0;
+  const t = useT();
+
+  const tabs = [
+    { href: "/home",         icon: Home,          label: t("nav.home")    },
+    { href: "/search",       icon: Search,        label: t("nav.search")  },
+    { href: "/listings/new", icon: Plus,          label: null             },
+    { href: "/chats",        icon: MessageCircle, label: t("nav.chats")   },
+    { href: "/profile",      icon: User,          label: t("nav.profile") },
+  ];
 
   function handleNewListing() {
     // Haptic feedback when tapping the + button

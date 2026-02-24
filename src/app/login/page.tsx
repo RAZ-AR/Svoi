@@ -4,10 +4,12 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useTelegram } from "@/components/telegram/telegram-provider";
+import { useT } from "@/lib/i18n";
 
 export default function LoginPage() {
   const { isTelegram, initData } = useTelegram();
   const router = useRouter();
+  const t = useT();
 
   // If Telegram becomes available after mount, go back to root to auto-auth
   useEffect(() => {
@@ -18,30 +20,27 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
-      {/* Logo */}
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold tracking-tight text-gray-900">Svoi</h1>
-        <p className="mt-1 text-gray-400">Свой базар в Белграде</p>
+        <p className="mt-1 text-gray-400">{t("login.tagline")}</p>
       </div>
 
-      {/* Main CTA */}
       <div className="w-full max-w-sm space-y-3">
         <p className="mb-6 text-center text-sm text-gray-500">
-          Войди через Telegram или Google, чтобы разместить объявление и общаться
+          {t("login.description")}
         </p>
 
-        {/* Google OAuth via Supabase */}
-        <GoogleLoginButton />
+        <GoogleLoginButton label={t("login.sign_in_google")} />
 
         <p className="pt-2 text-center text-xs text-gray-300">
-          Открывай через Telegram — вход будет автоматическим ✨
+          {t("login.tg_hint")}
         </p>
       </div>
     </div>
   );
 }
 
-function GoogleLoginButton() {
+function GoogleLoginButton({ label }: { label: string }) {
   async function handleGoogleLogin() {
     const { createClient } = await import("@/lib/supabase/client");
     const supabase = createClient();
@@ -72,7 +71,7 @@ function GoogleLoginButton() {
         <path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/>
         <path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>
       </svg>
-      Войти через Google
+      {label}
     </button>
   );
 }

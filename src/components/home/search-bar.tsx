@@ -3,9 +3,11 @@
 
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 export function SearchBar() {
   const router = useRouter();
+  const t = useT();
 
   return (
     <button
@@ -21,7 +23,7 @@ export function SearchBar() {
     >
       <Search size={18} className="shrink-0 text-[#45B8C0]" />
       <span className="flex-1 text-sm text-gray-400">
-        Что ищем?
+        {t("home.search_placeholder")}
       </span>
     </button>
   );

@@ -5,17 +5,11 @@ import { BottomSheet } from "@/components/ui/bottom-sheet";
 import { useSearchStore, type SortOption } from "@/store/search.store";
 import { useCategories } from "@/hooks/use-listings";
 import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
 
 const DISTRICTS = [
   "Нови Београд", "Земун", "Вождовац", "Врачар",
   "Звездара",     "Палилула", "Чукарица", "Стари град",
-];
-
-const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "newest",     label: "Сначала новые"   },
-  { value: "price_asc",  label: "Дешевле"         },
-  { value: "price_desc", label: "Дороже"           },
-  { value: "popular",    label: "Популярные"       },
 ];
 
 const CURRENCIES = ["", "EUR", "RSD", "USD"] as const;
@@ -28,6 +22,14 @@ interface FiltersSheetProps {
 export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
   const { filters, setFilter, applyFilters, resetFilters } = useSearchStore();
   const { data: categories = [] } = useCategories();
+  const t = useT();
+
+  const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+    { value: "newest",     label: t("search.sort_newest")    },
+    { value: "price_asc",  label: t("search.sort_price_asc") },
+    { value: "price_desc", label: t("search.sort_price_desc")},
+    { value: "popular",    label: t("search.sort_popular")   },
+  ];
 
   function handleApply() {
     applyFilters();
@@ -43,7 +45,7 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
     <BottomSheet
       isOpen={isOpen}
       onClose={() => { applyFilters(); onClose(); }}
-      title="Фильтры"
+      title={t("search.filters")}
       maxHeight={92}
       footer={
         <div className="flex gap-3 py-2">
@@ -52,14 +54,14 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
             onClick={handleReset}
             className="flex-1 rounded-2xl border border-gray-200 py-3.5 text-sm font-medium text-gray-600 active:bg-gray-50"
           >
-            Сбросить
+            {t("common.reset")}
           </button>
           <button
             type="button"
             onClick={handleApply}
             className="flex-[2] rounded-2xl bg-primary py-3.5 text-sm font-semibold text-white shadow-md shadow-primary/25 active:scale-[0.97]"
           >
-            Применить
+            {t("common.apply")}
           </button>
         </div>
       }
@@ -68,11 +70,10 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
 
         {/* ── Category ───────────────────────────────────────────────────── */}
         <section>
-          <p className="mb-2.5 text-sm font-semibold text-gray-700">Категория</p>
+          <p className="mb-2.5 text-sm font-semibold text-gray-700">{t("search.category")}</p>
           <div className="grid grid-cols-2 gap-2">
-            {/* "All" option */}
             <FilterChip
-              label="Все категории"
+              label={t("common.all_categories")}
               emoji="🏙️"
               isActive={filters.categoryId === null}
               onClick={() => setFilter("categoryId", null)}
@@ -93,16 +94,16 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
 
         {/* ── Price range ─────────────────────────────────────────────────── */}
         <section>
-          <p className="mb-2.5 text-sm font-semibold text-gray-700">Цена</p>
+          <p className="mb-2.5 text-sm font-semibold text-gray-700">{t("search.price")}</p>
           <div className="flex items-center gap-3">
             <PriceInput
-              placeholder="от"
+              placeholder={t("common.from")}
               value={filters.minPrice}
               onChange={(v) => setFilter("minPrice", v)}
             />
             <span className="text-gray-400">—</span>
             <PriceInput
-              placeholder="до"
+              placeholder={t("common.to")}
               value={filters.maxPrice}
               onChange={(v) => setFilter("maxPrice", v)}
             />
@@ -122,7 +123,7 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
                     : "border-gray-200 bg-white text-gray-600"
                 )}
               >
-                {c === "" ? "Любая" : c}
+                {c === "" ? t("common.any") : c}
               </button>
             ))}
           </div>
@@ -130,7 +131,7 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
 
         {/* ── District ────────────────────────────────────────────────────── */}
         <section>
-          <p className="mb-2.5 text-sm font-semibold text-gray-700">Район</p>
+          <p className="mb-2.5 text-sm font-semibold text-gray-700">{t("search.district")}</p>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
@@ -142,7 +143,7 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
                   : "border-gray-200 bg-white text-gray-600"
               )}
             >
-              Весь Белград
+              {t("common.all_belgrade")}
             </button>
             {DISTRICTS.map((d) => (
               <button
@@ -164,7 +165,7 @@ export function FiltersSheet({ isOpen, onClose }: FiltersSheetProps) {
 
         {/* ── Sort ────────────────────────────────────────────────────────── */}
         <section>
-          <p className="mb-2.5 text-sm font-semibold text-gray-700">Сортировка</p>
+          <p className="mb-2.5 text-sm font-semibold text-gray-700">{t("search.sort")}</p>
           <div className="flex flex-col gap-1">
             {SORT_OPTIONS.map((opt) => (
               <button

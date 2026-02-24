@@ -1,19 +1,24 @@
 // Svoi — Wizard step progress bar
-import { cn } from "@/lib/utils";
-import type { WizardStep } from "@/store/new-listing.store";
+"use client";
 
-const STEPS = [
-  { n: 1, label: "Категория" },
-  { n: 2, label: "Фото"      },
-  { n: 3, label: "Детали"    },
-  { n: 4, label: "Адрес"     },
-] as const;
+import { cn } from "@/lib/utils";
+import { useT } from "@/lib/i18n";
+import type { WizardStep } from "@/store/new-listing.store";
 
 interface WizardProgressProps {
   current: WizardStep;
 }
 
 export function WizardProgress({ current }: WizardProgressProps) {
+  const t = useT();
+
+  const STEPS = [
+    { n: 1, label: t("wizard.step_category") },
+    { n: 2, label: t("wizard.step_photos")   },
+    { n: 3, label: t("wizard.step_details")  },
+    { n: 4, label: t("wizard.step_address")  },
+  ] as const;
+
   return (
     <div className="px-5 pt-3 pb-1">
       {/* Steps row */}

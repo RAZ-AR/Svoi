@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "search": "Search",
+    "chats": "Chats",
+    "profile": "Profile"
+  },
+  "home": {
+    "search_placeholder": "What are you looking for?",
+    "section_now": "Right now",
+    "section_listings": "Listings",
+    "promo_tag": "Fresh listings",
+    "promo_title": "Find yours\nnear home",
+    "promo_subtitle": "Thousands of listings in your city",
+    "promo_browse": "Browse",
+    "promo_post": "Post ad",
+    "promo_strip": "Post your first listing",
+    "promo_strip_free": "for free"
+  },
+  "login": {
+    "tagline": "Your local marketplace in Belgrade",
+    "description": "Sign in with Google to post listings and chat",
+    "tg_hint": "Open via Telegram for automatic sign-in ✨",
+    "sign_in_google": "Sign in with Google"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Error",
+    "retry": "Try again",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "back": "Back",
+    "done": "Done",
+    "next": "Next →",
+    "free": "Free",
+    "negotiable": "Negotiable",
+    "just_now": "just now",
+    "min_ago": "{n} min ago",
+    "hr_ago": "{n} hr ago",
+    "yesterday": "yesterday",
+    "days_ago": "{n} days ago",
+    "reset": "Reset",
+    "apply": "Apply",
+    "all_belgrade": "All Belgrade",
+    "all_categories": "All categories",
+    "any": "Any",
+    "from": "from",
+    "to": "to"
+  },
+  "search": {
+    "filters": "Filters",
+    "category": "Category",
+    "price": "Price",
+    "district": "District",
+    "sort": "Sort",
+    "sort_newest": "Newest first",
+    "sort_price_asc": "Cheapest first",
+    "sort_price_desc": "Most expensive",
+    "sort_popular": "Popular"
+  },
+  "listing": {
+    "edit": "Edit",
+    "write_seller": "Message seller",
+    "write": "Message",
+    "opening": "Opening…",
+    "status_active": "Active",
+    "status_active_hint": "Visible to everyone",
+    "status_paused": "Paused",
+    "status_paused_hint": "Hidden from search, saved",
+    "status_sold": "Sold",
+    "status_sold_hint": "Marked as sold",
+    "delete": "Delete",
+    "delete_hint": "Cannot be undone",
+    "no_results": "Failed to load listings"
+  },
+  "profile": {
+    "title": "Profile",
+    "listings": "Listings",
+    "active": "Active",
+    "views": "Views",
+    "my_listings": "My listings",
+    "active_count": "{n} active",
+    "my_chats": "My chats",
+    "favorites": "Favorites",
+    "edit_profile": "Edit profile",
+    "logout": "Log out",
+    "language": "Language",
+    "language_title": "Interface language",
+    "version": "Svoi v0.1.0 · Local marketplace in Belgrade"
+  },
+  "wizard": {
+    "step_category": "Category",
+    "step_photos": "Photos",
+    "step_details": "Details",
+    "step_address": "Address",
+    "title_label": "Title",
+    "title_placeholder": "E.g.: IKEA sofa in great condition",
+    "title_min": "Minimum 3 characters",
+    "description_label": "Description",
+    "description_placeholder": "Tell more: condition, size, history…",
+    "price_label": "Price",
+    "price_placeholder": "0 = free, empty = negotiable",
+    "price_hint": "Leave empty — buyer will see \"Negotiable\"",
+    "event_date": "📅 Event date & time",
+    "publishing": "Publishing…",
+    "publish": "Publish ✓"
+  },
+  "chats": {
+    "title": "Chats",
+    "empty": "No messages yet",
+    "message_placeholder": "Message…"
+  },
+  "error": {
+    "something_wrong": "Something went wrong",
+    "reload": "Try reloading the page"
+  },
+  "onboarding": {
+    "saving": "Saving…",
+    "address_placeholder": "Or type yourself: «Novi Beograd, Block 45»"
+  }
+}

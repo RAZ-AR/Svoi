@@ -8,8 +8,9 @@ import {
   CategoriesCarouselSkeleton,
 } from "@/components/home/categories-carousel";
 import { ListingsFeed } from "@/components/home/listings-feed";
-import { MapButton } from "@/components/home/map-button";
+import { FeedHeader } from "@/components/home/feed-header";
 import { getCategories } from "@/actions/listings";
+
 
 interface HomePageProps {
   searchParams: Promise<{ category?: string }>;
@@ -43,13 +44,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
         {/* ── Feed header ──────────────────────────────────────────────── */}
         <section>
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-base font-semibold text-gray-900">
-              {category ? "Объявления" : "Сейчас"}
-            </h2>
-            <MapButton />
-          </div>
-
+          <FeedHeader hasCategory={!!category} />
           <ListingsFeed
             filters={category ? { categorySlug: category } : {}}
           />
