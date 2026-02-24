@@ -1,0 +1,84 @@
+/* Svoi — Global styles: clean white, lots of air, Apple vibes */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Leaflet: fix tile rendering inside Next.js ──────────────────────────── */
+.leaflet-container {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  z-index: 0;
+}
+/* Remove default Leaflet focus outline (we have our own) */
+.leaflet-container a:focus {
+  outline: none;
+}
+/* Ensure map tiles don't bleed outside rounded containers */
+.leaflet-container .leaflet-map-pane {
+  z-index: 1;
+}
+
+@layer base {
+  :root {
+    /* ── Light theme (default) ─────────────────────────────────────────────── */
+    --background:   0 0% 100%;       /* pure white */
+    --foreground:   222 47% 11%;     /* near-black */
+    --card:         0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover:      0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary:      224 88% 60%;     /* svoi blue #3b6bff */
+    --primary-foreground: 0 0% 100%;
+    --secondary:    220 14% 96%;     /* very light grey */
+    --secondary-foreground: 222 47% 11%;
+    --muted:        220 14% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent:       220 14% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive:  0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border:       220 13% 91%;
+    --input:        220 13% 91%;
+    --ring:         224 88% 60%;
+    --radius:       0.75rem;         /* 12px – comfortable roundness */
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    /* Prevent layout shift when scrollbar appears */
+    scrollbar-gutter: stable;
+    /* Smooth scroll everywhere */
+    scroll-behavior: smooth;
+    /* Telegram Mini App: disable text size adjustment */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Safe area support for Telegram iOS */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Crisp tap highlight for mobile */
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer utilities {
+  /* Full-height for Telegram Mini App — avoids the address bar jump */
+  .tg-viewport {
+    height: calc(var(--tg-viewport-height, 100vh));
+    min-height: calc(var(--tg-viewport-height, 100vh));
+  }
+
+  /* Card hover lift */
+  .card-lift {
+    @apply transition-transform duration-150 active:scale-[0.98];
+  }
+}

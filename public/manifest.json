@@ -1,0 +1,50 @@
+{
+  "name": "Svoi — Свой базар",
+  "short_name": "Svoi",
+  "description": "Доска объявлений для своих в Белграде и Сербии",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "lang": "ru",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "shopping", "social"],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Главная — лента объявлений"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Новое объявление",
+      "url": "/listings/new",
+      "description": "Разместить объявление",
+      "icons": [{ "src": "/icons/shortcut-new.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Поиск",
+      "url": "/search",
+      "description": "Найти объявление",
+      "icons": [{ "src": "/icons/shortcut-search.png", "sizes": "96x96" }]
+    }
+  ]
+}

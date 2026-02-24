@@ -1,0 +1,29 @@
+{
+  "_comment": "Svoi Telegram Mini App configuration — reference for @BotFather setup",
+  "bot_name": "SvoiBot",
+  "mini_app_url": "https://svoi.app",
+  "mini_app_name": "Svoi",
+  "mini_app_description": "Свой базар — доска объявлений для русских в Белграде",
+
+  "_setup_instructions": [
+    "1. Open @BotFather in Telegram",
+    "2. Send /newbot and follow setup → save the token to TELEGRAM_BOT_TOKEN",
+    "3. Send /mybots → select your bot → Bot Settings → Menu Button",
+    "4. Set URL to: https://svoi.app",
+    "5. Set button text to: Открыть Svoi",
+    "6. Send /newapp to create the Mini App entry",
+    "7. Set the Mini App URL to: https://svoi.app"
+  ],
+
+  "permissions": [
+    "READ_BASIC_INFO"
+  ],
+
+  "inline_mode": false,
+  "group_inline_mode": false,
+
+  "allowed_origins": [
+    "https://svoi.app",
+    "https://*.vercel.app"
+  ]
+}
