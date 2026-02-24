@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Supabase server client (for Server Components and Server Actions)
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";

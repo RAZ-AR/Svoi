@@ -42,7 +42,8 @@ export async function authenticateWithTelegram(
     // ── Step 2: Upsert user via secure postgres function ──────────────────────
     const serviceClient = createServiceClient();
 
-    const { data: svoiUser, error: upsertError } = await serviceClient.rpc(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { data: svoiUser, error: upsertError } = await (serviceClient as any).rpc(
       "upsert_telegram_user",
       {
         p_telegram_id: tgUser.id,

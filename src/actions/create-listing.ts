@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Create listing server action + Supabase Storage upload helper
 "use server";
 

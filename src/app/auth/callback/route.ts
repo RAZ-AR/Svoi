@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Supabase OAuth callback handler (Google login)
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";

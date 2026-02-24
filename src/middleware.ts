@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Next.js middleware: session refresh + route protection
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";

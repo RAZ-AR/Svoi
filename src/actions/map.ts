@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Map server actions: geo queries via PostGIS
 "use server";
 

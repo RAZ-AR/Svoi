@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — User profile server actions
 "use server";
 

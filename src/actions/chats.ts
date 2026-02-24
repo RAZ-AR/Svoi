@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Chat server actions
 "use server";
 

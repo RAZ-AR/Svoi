@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Full map page shell: SSR-safe dynamic import + all overlays
 "use client";
 

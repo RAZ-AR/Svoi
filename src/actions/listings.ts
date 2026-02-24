@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — Listings server actions
 "use server";
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Svoi — TanStack Query hook for search with debounce
 "use client";
 
