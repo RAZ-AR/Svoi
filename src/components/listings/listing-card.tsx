@@ -1,4 +1,4 @@
-// Svoi — Listing card: shown in 2-column feed grid
+// Svoi — Listing card: warm minimal style (cream bg, centered image)
 "use client";
 
 import Image from "next/image";
@@ -27,95 +27,71 @@ export function ListingCard({
     <Link
       href={`/listings/${listing.id}`}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl bg-white",
-        "shadow-md shadow-black/8",
+        "group relative flex flex-col overflow-hidden rounded-[1.25rem] bg-[#EDE8E2]",
         "transition-transform duration-150 active:scale-[0.97]",
         className
       )}
     >
-      {/* ── Cover image ───────────────────────────────────────────────────── */}
-      <div className="relative aspect-square w-full overflow-hidden bg-gray-50">
+      {/* ── Image area ────────────────────────────────────────────────────── */}
+      <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden p-4">
         {coverImage ? (
           <Image
             src={coverImage}
             alt={listing.title}
             fill
             sizes="(max-width: 640px) 50vw, 33vw"
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-contain p-3 transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          // Placeholder when no image
-          <div className="flex h-full items-center justify-center text-3xl">
-            {listing.category?.emoji ?? "📦"}
-          </div>
+          <span className="text-5xl">{listing.category?.emoji ?? "📦"}</span>
         )}
 
         {/* Favorite button */}
-        {onFavoriteToggle && (
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              onFavoriteToggle(listing.id);
-            }}
-            className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm transition-colors active:bg-white"
-          >
-            <Heart
-              size={16}
-              className={cn(
-                "transition-colors",
-                isFavorite ? "fill-red-500 stroke-red-500" : "stroke-gray-500"
-              )}
-            />
-          </button>
-        )}
-
-        {/* Category badge — top left */}
-        <span className="absolute left-2 top-2 rounded-full bg-white/80 px-2 py-0.5 text-xs font-medium text-gray-700 backdrop-blur-sm">
-          {listing.category?.emoji} {listing.category?.name}
-        </span>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            onFavoriteToggle?.(listing.id);
+          }}
+          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm transition-colors active:bg-white"
+        >
+          <Heart
+            size={15}
+            className={cn(
+              "transition-colors",
+              isFavorite ? "fill-red-500 stroke-red-500" : "stroke-[#8A7255]"
+            )}
+          />
+        </button>
       </div>
 
-      {/* ── Content ───────────────────────────────────────────────────────── */}
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        {/* Price */}
-        <p className="text-sm font-semibold text-gray-900">
-          {formatPrice(listing.price, listing.currency)}
-        </p>
-
-        {/* Title */}
-        <p className="line-clamp-2 text-sm leading-snug text-gray-700">
+      {/* ── Info ──────────────────────────────────────────────────────────── */}
+      <div className="flex flex-col gap-0.5 px-3 pb-4 pt-1">
+        <p className="line-clamp-1 text-sm font-semibold text-[#1A1A1A]">
           {listing.title}
         </p>
-
-        {/* Location + time */}
-        <div className="mt-auto flex items-center justify-between pt-1">
-          {listing.address ? (
-            <span className="truncate text-xs text-gray-400">
-              📍 {listing.address}
-            </span>
-          ) : (
-            <span />
-          )}
-          <span className="shrink-0 text-xs text-gray-400">
-            {formatRelativeTime(listing.created_at)}
-          </span>
-        </div>
+        <p className="text-base font-bold text-[#1A1A1A]">
+          {formatPrice(listing.price, listing.currency)}
+        </p>
+        {listing.address && (
+          <p className="truncate text-xs text-[#A89070]">
+            {listing.address}
+          </p>
+        )}
       </div>
     </Link>
   );
 }
 
-// ─── Skeleton placeholder ──────────────────────────────────────────────────────
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
 
 export function ListingCardSkeleton({ className }: { className?: string }) {
   return (
-    <div className={cn("overflow-hidden rounded-2xl bg-white border border-gray-100", className)}>
-      <div className="aspect-square w-full animate-pulse bg-gray-100" />
+    <div className={cn("overflow-hidden rounded-[1.25rem] bg-[#EDE8E2]", className)}>
+      <div className="aspect-square w-full animate-pulse bg-[#E5DED6]" />
       <div className="space-y-2 p-3">
-        <div className="h-4 w-16 animate-pulse rounded bg-gray-100" />
-        <div className="h-3 w-full animate-pulse rounded bg-gray-100" />
-        <div className="h-3 w-3/4 animate-pulse rounded bg-gray-100" />
+        <div className="h-3.5 w-3/4 animate-pulse rounded-full bg-[#E5DED6]" />
+        <div className="h-4 w-1/2 animate-pulse rounded-full bg-[#E5DED6]" />
       </div>
     </div>
   );

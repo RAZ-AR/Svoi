@@ -9,24 +9,22 @@ export default function ChatsPage() {
   const { data: chats, isLoading } = useMyChats();
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-[#F5F0EB]">
       <AppHeader title="Чаты" showLogo={false} />
 
-      {isLoading ? (
-        <div className="divide-y divide-gray-50">
-          {Array.from({ length: 5 }).map((_, i) => (
+      <div className="flex flex-col gap-2 px-4 pt-2">
+        {isLoading ? (
+          Array.from({ length: 5 }).map((_, i) => (
             <ChatItemSkeleton key={i} />
-          ))}
-        </div>
-      ) : !chats?.length ? (
-        <EmptyChats />
-      ) : (
-        <div className="divide-y divide-gray-50">
-          {chats.map((chat) => (
+          ))
+        ) : !chats?.length ? (
+          <EmptyChats />
+        ) : (
+          chats.map((chat) => (
             <ChatItem key={chat.id} chat={chat} />
-          ))}
-        </div>
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 }

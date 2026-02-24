@@ -11,22 +11,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette — teal + sage (inspired by reference design)
+        // Brand palette — warm cream + sand + near-black (minimal furniture style)
         svoi: {
-          50:  "#eef8f9",
-          100: "#ccedf0",
-          400: "#5dc4cc",
-          500: "#45b8c0",
-          600: "#34a2aa",
-          700: "#267880",
+          50:  "#faf7f4",
+          100: "#f5f0eb",
+          200: "#ede8e2",
+          300: "#e5ded6",
+          400: "#c9b99a",
+          500: "#a89070",
+          600: "#8a7255",
         },
-        sage: {
-          50:  "#f2f5f4",
-          100: "#e2e9e6",
-          200: "#c8d3cf",
-          300: "#aebdb8",
-          400: "#94a8a2",
-          500: "#7a938d",
+        sand: {
+          100: "#f5f0eb",
+          200: "#ede8e2",
+          300: "#e0d8ce",
+          400: "#c9b99a",
+          500: "#b0986e",
         },
         // Semantic tokens (light theme)
         background: "hsl(var(--background))",

@@ -1,4 +1,4 @@
-// Svoi — Category carousel: horizontal scroll, 8 big cards
+// Svoi — Category carousel: pill filter chips (outlined / active=sand)
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,7 +16,6 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
 
   function handleClick(slug: string) {
     if (activeSlug === slug) {
-      // Tap active category → clear filter
       router.push("/home");
     } else {
       router.push(`/home?category=${slug}`);
@@ -25,16 +24,15 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
 
   return (
     <div className="relative">
-      {/* Horizontal scroll container — hide scrollbar */}
       <div
         className="
-          flex gap-3 overflow-x-auto py-1
+          flex gap-2 overflow-x-auto py-1
           scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none]
           [&::-webkit-scrollbar]:hidden
         "
       >
         {categories.map((cat) => (
-          <CategoryCard
+          <CategoryChip
             key={cat.id}
             category={cat}
             isActive={activeSlug === cat.slug}
@@ -43,15 +41,15 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
         ))}
       </div>
 
-      {/* Fade on right edge to hint at more cards */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-[#BEC8C4]" />
+      {/* Fade hint — matches warm cream background */}
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-[#F5F0EB]" />
     </div>
   );
 }
 
-// ─── Single category card ──────────────────────────────────────────────────────
+// ─── Single chip ──────────────────────────────────────────────────────────────
 
-function CategoryCard({
+function CategoryChip({
   category,
   isActive,
   onClick,
@@ -65,19 +63,15 @@ function CategoryCard({
       type="button"
       onClick={onClick}
       className={cn(
-        // Base: pill shape, enough padding, shrink-0 so it doesn't collapse
-        "flex shrink-0 flex-col items-center gap-1.5 rounded-2xl px-4 py-3",
-        "border transition-all duration-150 active:scale-95",
-        // Active state
+        "flex shrink-0 items-center gap-2 rounded-full px-4 py-2",
+        "border text-sm font-medium transition-all duration-150 active:scale-95",
         isActive
-          ? "border-[#45B8C0] bg-[#45B8C0] text-white shadow-md shadow-[#45B8C0]/30"
-          : "border-transparent bg-white text-gray-700 shadow-sm shadow-black/6 hover:shadow-md"
+          ? "border-[#C9B99A] bg-[#C9B99A] text-[#1A1A1A]"
+          : "border-[#E5DED6] bg-white text-[#6B5E50]"
       )}
     >
-      <span className="text-2xl leading-none">{category.emoji ?? "📌"}</span>
-      <span className="whitespace-nowrap text-xs font-medium leading-none">
-        {category.name}
-      </span>
+      <span className="text-base leading-none">{category.emoji ?? "📌"}</span>
+      <span className="whitespace-nowrap">{category.name}</span>
     </button>
   );
 }
@@ -86,11 +80,11 @@ function CategoryCard({
 
 export function CategoriesCarouselSkeleton() {
   return (
-    <div className="flex gap-3 overflow-hidden py-1">
-      {Array.from({ length: 6 }).map((_, i) => (
+    <div className="flex gap-2 overflow-hidden py-1">
+      {Array.from({ length: 5 }).map((_, i) => (
         <div
           key={i}
-          className="flex h-[76px] w-[76px] shrink-0 animate-pulse flex-col items-center gap-2 rounded-2xl bg-gray-100"
+          className="h-9 w-24 shrink-0 animate-pulse rounded-full bg-[#EDE8E2]"
         />
       ))}
     </div>

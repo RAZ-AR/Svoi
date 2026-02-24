@@ -18,9 +18,9 @@ export function SellerCard({ seller, listingCount }: SellerCardProps) {
     <Link
       href={`/users/${seller.id}`}
       className="
-        flex items-center gap-3 rounded-2xl
-        border border-gray-100 bg-white p-4
-        transition-colors active:bg-gray-50
+        flex items-center gap-3 rounded-[1.25rem]
+        bg-[#EDE8E2] p-4
+        transition-colors active:bg-[#E5DED6]
       "
     >
       {/* Avatar */}

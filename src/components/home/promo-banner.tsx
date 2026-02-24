@@ -1,4 +1,4 @@
-// Svoi — Promo banner: hero card on home screen (teal gradient)
+// Svoi — Promo banner: warm minimal style (muted purple, warm text)
 "use client";
 
 import Link from "next/link";
@@ -8,45 +8,38 @@ export function PromoBanner() {
   const t = useT();
 
   return (
-    <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-[#5CC8D0] to-[#3AA5AD] px-5 py-6 text-white shadow-lg shadow-[#45B8C0]/20">
-      <p className="mb-1 text-xs font-medium uppercase tracking-widest text-white/70">
-        {t("home.promo_tag")}
-      </p>
-      <h2 className="mb-1 whitespace-pre-line text-2xl font-extrabold leading-tight">
-        {t("home.promo_title")}
-      </h2>
-      <p className="mb-5 text-sm text-white/80">
-        {t("home.promo_subtitle")}
-      </p>
-      <div className="flex gap-3">
+    <div className="relative overflow-hidden rounded-[1.5rem] bg-[#8E7F96] px-5 py-5">
+      {/* Decorative circle in background */}
+      <div className="pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full bg-[#A393AB]/30" />
+      <div className="pointer-events-none absolute -bottom-6 right-10 h-24 w-24 rounded-full bg-[#7A6B82]/40" />
+
+      <div className="relative z-10 max-w-[60%]">
+        <p className="mb-3 text-base font-bold leading-snug text-white">
+          {t("home.promo_title")}
+        </p>
+        <p className="mb-4 text-xs text-white/70">
+          {t("home.promo_subtitle")}
+        </p>
         <Link
           href="/search"
-          className="rounded-full bg-[#1A1E22] px-5 py-2 text-sm font-semibold text-white active:scale-95 transition-transform"
+          className="inline-flex items-center rounded-full bg-[#1A1A1A] px-5 py-2 text-xs font-semibold text-white transition-transform active:scale-95"
         >
           {t("home.promo_browse")}
-        </Link>
-        <Link
-          href="/listings/new"
-          className="rounded-full border border-white/40 bg-white/15 px-5 py-2 text-sm font-semibold text-white active:scale-95 transition-transform"
-        >
-          {t("home.promo_post")}
         </Link>
       </div>
     </div>
   );
 }
 
-// ─── Info strip ───────────────────────────────────────────────────────────────
-
+/* PromoStrip is no longer shown — replaced by inline promo banner */
 export function PromoStrip() {
   const t = useT();
-
   return (
-    <div className="flex items-center justify-center gap-2 rounded-2xl bg-[#1A1E22] px-4 py-2.5 text-center text-xs text-white">
-      <span className="text-base">🎉</span>
+    <div className="flex items-center justify-center gap-2 rounded-full bg-[#EDE8E2] px-4 py-2.5 text-xs text-[#1A1A1A]">
+      <span>🎉</span>
       <span>
         {t("home.promo_strip")}{" "}
-        <span className="font-semibold text-[#5CC8D0]">{t("home.promo_strip_free")}</span>
+        <span className="font-semibold">{t("home.promo_strip_free")}</span>
       </span>
     </div>
   );

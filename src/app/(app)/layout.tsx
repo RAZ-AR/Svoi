@@ -33,9 +33,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="tg-viewport flex flex-col bg-white">
-      {/* Scrollable content area — padded above bottom nav */}
-      <main className="flex-1 overflow-y-auto pb-20">
+    <div className="tg-viewport flex flex-col bg-[#F5F0EB]">
+      {/* Scrollable content — pb-28 leaves room for the floating nav pill */}
+      <main className="flex-1 overflow-y-auto pb-28">
         {children}
       </main>
       <BottomNav />

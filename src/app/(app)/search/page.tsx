@@ -30,9 +30,9 @@ export default function SearchPage() {
   const showResults = query.trim().length > 0 || filterCount > 0;
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-[#F5F0EB]">
       {/* ── Sticky top bar ──────────────────────────────────────────────── */}
-      <div className="sticky top-0 z-30 flex flex-col gap-2.5 bg-white/95 px-4 pb-3 pt-4 backdrop-blur-sm">
+      <div className="sticky top-0 z-30 flex flex-col gap-2.5 bg-[#F5F0EB]/95 px-4 pb-3 pt-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
           {/* Search input — takes all available width */}
           <div className="flex-1">
@@ -45,10 +45,10 @@ export default function SearchPage() {
             onClick={() => setFiltersOpen(true)}
             className={cn(
               "relative flex h-12 w-12 shrink-0 items-center justify-center",
-              "rounded-2xl border transition-colors",
+              "rounded-full border transition-colors",
               filterCount > 0
-                ? "border-primary bg-primary/8 text-primary"
-                : "border-gray-200 bg-white text-gray-600"
+                ? "border-[#C9B99A] bg-[#C9B99A] text-[#1A1A1A]"
+                : "border-[#E5DED6] bg-white text-[#6B5E50]"
             )}
           >
             <SlidersHorizontal size={18} />

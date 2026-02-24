@@ -1,4 +1,4 @@
-// Svoi — Bottom navigation bar (5 tabs, fixed at bottom)
+// Svoi — Bottom navigation: dark floating pill (warm minimal style)
 "use client";
 
 import Link from "next/link";
@@ -7,90 +7,78 @@ import { Home, Search, Plus, MessageCircle, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTelegram } from "@/components/telegram/telegram-provider";
 import { useMyChats } from "@/hooks/use-chat";
-import { useT } from "@/lib/i18n";
 
 export function BottomNav() {
   const pathname = usePathname();
   const { webApp } = useTelegram();
   const { data: chats } = useMyChats();
   const totalUnread = chats?.reduce((s, c) => s + c.unread_count, 0) ?? 0;
-  const t = useT();
 
   const tabs = [
-    { href: "/home",         icon: Home,          label: t("nav.home")    },
-    { href: "/search",       icon: Search,        label: t("nav.search")  },
-    { href: "/listings/new", icon: Plus,          label: null             },
-    { href: "/chats",        icon: MessageCircle, label: t("nav.chats")   },
-    { href: "/profile",      icon: User,          label: t("nav.profile") },
+    { href: "/home",         icon: Home,          isCenter: false },
+    { href: "/search",       icon: Search,        isCenter: false },
+    { href: "/listings/new", icon: Plus,          isCenter: true  },
+    { href: "/chats",        icon: MessageCircle, isCenter: false },
+    { href: "/profile",      icon: User,          isCenter: false },
   ];
 
   function handleNewListing() {
-    // Haptic feedback when tapping the + button
     webApp?.HapticFeedback?.impactOccurred("medium");
   }
 
   return (
-    <nav
-      className="
-        fixed bottom-0 left-0 right-0 z-50
-        border-t border-gray-100 bg-white/95 backdrop-blur-md
-        pb-safe-bottom
-      "
-    >
-      <div className="flex h-16 items-center justify-around px-2">
+    /* Floating dark pill — centered, above safe area */
+    <nav className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 pb-safe-bottom">
+      <div className="flex items-center gap-1 rounded-full bg-[#1A1A1A] px-4 py-3 shadow-2xl shadow-black/30">
         {tabs.map((tab) => {
           const isActive = pathname.startsWith(tab.href) && tab.href !== "/listings/new";
           const Icon = tab.icon;
+          const showBadge = tab.href === "/chats" && totalUnread > 0;
 
-          // Center "+ New" button — always prominent
-          if (!tab.label) {
+          /* ── Centre "+" button ── */
+          if (tab.isCenter) {
             return (
               <Link
                 key={tab.href}
                 href={tab.href}
                 onClick={handleNewListing}
                 className="
-                  flex h-12 w-12 items-center justify-center
-                  rounded-2xl bg-primary shadow-lg shadow-primary/30
+                  mx-1 flex h-11 w-11 items-center justify-center
+                  rounded-full bg-white/10 border border-white/20
                   transition-transform active:scale-90
                 "
               >
-                <Plus size={22} className="text-white" strokeWidth={2.5} />
+                <Plus size={20} className="text-white" strokeWidth={2.5} />
               </Link>
             );
           }
-
-          const showBadge = tab.href === "/chats" && totalUnread > 0;
 
           return (
             <Link
               key={tab.href}
               href={tab.href}
-              className="flex flex-1 flex-col items-center gap-1 py-2"
+              className="relative mx-0.5 flex h-11 w-11 items-center justify-center rounded-full transition-all active:scale-90"
             >
-              <div className="relative">
-                <Icon
-                  size={22}
-                  className={cn(
-                    "transition-colors",
-                    isActive ? "text-primary" : "text-gray-400"
-                  )}
-                  strokeWidth={isActive ? 2.5 : 2}
-                />
-                {showBadge && (
-                  <span className="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] font-bold text-white">
-                    {totalUnread > 99 ? "99+" : totalUnread}
-                  </span>
-                )}
-              </div>
-              <span
+              {/* Active: sand/gold circle background */}
+              {isActive && (
+                <span className="absolute inset-0 rounded-full bg-[#C9B99A]" />
+              )}
+
+              <Icon
+                size={20}
                 className={cn(
-                  "text-[10px] font-medium transition-colors",
-                  isActive ? "text-primary" : "text-gray-400"
+                  "relative z-10 transition-colors",
+                  isActive ? "text-[#1A1A1A]" : "text-white/60"
                 )}
-              >
-                {tab.label}
-              </span>
+                strokeWidth={isActive ? 2.5 : 1.8}
+              />
+
+              {/* Unread badge */}
+              {showBadge && (
+                <span className="absolute right-1 top-1 flex h-3.5 min-w-3.5 items-center justify-center rounded-full bg-red-500 px-0.5 text-[8px] font-bold text-white z-20">
+                  {totalUnread > 9 ? "9+" : totalUnread}
+                </span>
+              )}
             </Link>
           );
         })}

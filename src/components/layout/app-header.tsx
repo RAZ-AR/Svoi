@@ -1,4 +1,4 @@
-// Svoi — App top header: logo + notifications (minimal)
+// Svoi — App top header: large title left + action buttons right
 import Link from "next/link";
 import { Bell } from "lucide-react";
 
@@ -14,27 +14,29 @@ export function AppHeader({
   rightSlot,
 }: AppHeaderProps) {
   return (
-    <header className="flex h-14 items-center justify-between px-5 bg-transparent">
+    <header className="flex items-start justify-between px-5 pb-2 pt-5">
       {showLogo ? (
-        <Link href="/home" className="flex items-baseline gap-1.5">
-          <span className="text-xl font-bold tracking-tight text-gray-900">
+        <Link href="/home" className="flex flex-col">
+          <span className="text-[28px] font-black leading-tight tracking-tight text-[#1A1A1A]">
             Svoi
           </span>
-          <span className="text-xs text-gray-400 font-normal">
+          <span className="text-xs text-[#A89070] font-medium -mt-0.5">
             Свой базар
           </span>
         </Link>
       ) : (
-        <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+        <h1 className="text-[28px] font-black leading-tight tracking-tight text-[#1A1A1A]">
+          {title}
+        </h1>
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mt-1">
         {rightSlot}
         <Link
           href="/notifications"
-          className="flex h-9 w-9 items-center justify-center rounded-xl transition-colors hover:bg-gray-50 active:bg-gray-100"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition-colors active:bg-[#EDE8E2]"
         >
-          <Bell size={20} className="text-gray-500" />
+          <Bell size={18} className="text-[#1A1A1A]" />
         </Link>
       </div>
     </header>
