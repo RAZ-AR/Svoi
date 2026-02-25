@@ -3,7 +3,6 @@
 
 import { cn } from "@/lib/utils";
 import { useNewListingStore } from "@/store/new-listing.store";
-import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { useT } from "@/lib/i18n";
 import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 
@@ -18,13 +17,9 @@ export function StepDetails({ onNext }: StepDetailsProps) {
   const isMeetup = draft.categoryEmoji === "☕";
   const t = useT();
 
-  const canProceed = draft.title.trim().length >= 3;
-
-  useTelegramMainButton({
-    text:     t("common.next"),
-    onClick:  onNext,
-    isActive: canProceed,
-  });
+  const hasTitle = draft.title.trim().length >= 3;
+  const hasPrice = draft.price.trim() !== "";
+  const canProceed = hasTitle && hasPrice;
 
   return (
     <div className="flex flex-col gap-5 px-4 py-4">
@@ -91,7 +86,7 @@ export function StepDetails({ onNext }: StepDetailsProps) {
       {/* Price + currency */}
       <div>
         <label className="mb-1.5 block text-sm font-medium text-gray-700">
-          {t("wizard.price_label")}
+          {t("wizard.price_label")} <span className="text-red-400">*</span>
         </label>
         <div className="flex gap-2">
           <input
@@ -100,12 +95,12 @@ export function StepDetails({ onNext }: StepDetailsProps) {
             onChange={(e) => updateDraft({ price: e.target.value })}
             placeholder={t("wizard.price_placeholder")}
             min={0}
-            className="
-              flex-1 rounded-2xl border border-gray-200 bg-gray-50
-              px-4 py-3.5 text-base text-gray-900
-              placeholder:text-sm placeholder:text-gray-400
-              focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20
-            "
+            className={cn(
+              "flex-1 rounded-2xl border bg-gray-50 px-4 py-3.5 text-base text-gray-900",
+              "placeholder:text-sm placeholder:text-gray-400",
+              "focus:border-primary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20",
+              !hasPrice && draft.price.length === 0 ? "border-gray-200" : hasPrice ? "border-gray-200" : "border-red-300"
+            )}
           />
           {/* Currency picker */}
           <div className="flex overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
@@ -147,7 +142,7 @@ export function StepDetails({ onNext }: StepDetailsProps) {
         </div>
       )}
 
-      {/* Pill navigation button — fixed above bottom nav */}
+      {/* Pill navigation button */}
       <WizardNextButton
         label={t("common.next")}
         onClick={onNext}

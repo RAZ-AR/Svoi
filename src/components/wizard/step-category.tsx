@@ -4,7 +4,6 @@
 import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useNewListingStore } from "@/store/new-listing.store";
-import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 import type { Category } from "@/lib/supabase/database.types";
 
@@ -24,13 +23,6 @@ export function StepCategory({ categories, onNext }: StepCategoryProps) {
       categoryEmoji: cat.emoji ?? "",
     });
   }
-
-  // Telegram MainButton: активна только когда категория выбрана
-  useTelegramMainButton({
-    text:     "Далее →",
-    onClick:  onNext,
-    isActive: selected !== null,
-  });
 
   // Auto-advance when user taps a category (feels instant)
   useEffect(() => {

@@ -4,7 +4,6 @@
 import dynamic from "next/dynamic";
 import { MapPin } from "lucide-react";
 import { useNewListingStore } from "@/store/new-listing.store";
-import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { BELGRADE_CENTER } from "@/lib/utils";
 import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 
@@ -38,13 +37,8 @@ interface StepLocationProps {
 export function StepLocation({ onSubmit, isSubmitting }: StepLocationProps) {
   const { draft, updateDraft } = useNewListingStore();
 
-  useTelegramMainButton({
-    text:      isSubmitting ? "Публикуем…" : "Опубликовать ✓",
-    onClick:   onSubmit,
-    isLoading: isSubmitting,
-    isActive:  !isSubmitting,
-    color:     "#22c55e", // green — final action
-  });
+  const hasAddress = draft.address.trim().length > 0;
+  const canSubmit = hasAddress && !isSubmitting;
 
   function selectDistrict(d: string) {
     updateDraft({ address: d });
@@ -55,13 +49,15 @@ export function StepLocation({ onSubmit, isSubmitting }: StepLocationProps) {
       <div>
         <h2 className="text-xl font-bold text-gray-900">Где находится?</h2>
         <p className="mt-0.5 text-sm text-gray-500">
-          Адрес поможет покупателям найти вас
+          Укажите район или адрес
         </p>
       </div>
 
       {/* Quick district picker */}
       <div>
-        <p className="mb-2 text-sm font-medium text-gray-700">Район</p>
+        <p className="mb-2 text-sm font-medium text-gray-700">
+          Район <span className="text-red-400">*</span>
+        </p>
         <div className="flex flex-wrap gap-2">
           {DISTRICTS.map((d) => (
             <button
@@ -122,11 +118,11 @@ export function StepLocation({ onSubmit, isSubmitting }: StepLocationProps) {
         )}
       </div>
 
-      {/* Pill navigation button — fixed above bottom nav */}
+      {/* Pill navigation button */}
       <WizardNextButton
         label={isSubmitting ? "Публикуем…" : "Опубликовать"}
         onClick={onSubmit}
-        disabled={isSubmitting}
+        disabled={!canSubmit}
         loading={isSubmitting}
         variant="green"
       />

@@ -1,10 +1,9 @@
 // Svoi — Wizard Step 2: upload photos (up to 5)
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Plus, X, ImageIcon, Loader2 } from "lucide-react";
 import { useNewListingStore } from "@/store/new-listing.store";
-import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { getImageUploadUrl } from "@/actions/create-listing";
 import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 
@@ -14,28 +13,23 @@ interface StepPhotosProps {
 
 export function StepPhotos({ onNext }: StepPhotosProps) {
   const { draft, addImage, removeImage, updateImageUrl } = useNewListingStore();
-  const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState<Set<string>>(new Set());
+  const [skipPhotos, setSkipPhotos] = useState(false);
 
   const canAddMore = draft.images.length < 5;
-  const allUploaded = draft.images.length === 0 || draft.images.every((i) => i.storedUrl);
-
-  // Telegram MainButton: can proceed even without photos (optional)
-  useTelegramMainButton({
-    text:     draft.images.length === 0 ? "Пропустить →" : "Далее →",
-    onClick:  onNext,
-    isActive: allUploaded || draft.images.length === 0,
-    isLoading: uploading.size > 0,
-  });
+  const isUploading = uploading.size > 0;
+  const allUploaded = draft.images.length > 0 && draft.images.every((i) => i.storedUrl);
+  const canProceed = !isUploading && (allUploaded || skipPhotos);
 
   async function handleFiles(files: FileList | null) {
     if (!files) return;
+    // Reset skip when user actually adds photos
+    setSkipPhotos(false);
     const allowed = Array.from(files).slice(0, 5 - draft.images.length);
 
     for (const file of allowed) {
       if (!file.type.startsWith("image/")) continue;
 
-      // Immediate local preview
       const localUrl = URL.createObjectURL(file);
       addImage({ localUrl, file });
       setUploading((s) => new Set(s).add(localUrl));
@@ -43,7 +37,6 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
       try {
         const result = await getImageUploadUrl(file.type);
         if (result.ok) {
-          // PUT directly to Supabase signed URL
           const res = await fetch(result.uploadUrl, {
             method: "PUT",
             body: file,
@@ -52,14 +45,12 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
           if (res.ok) {
             updateImageUrl(localUrl, result.publicUrl);
           } else {
-            // Upload failed — remove broken image from draft
             removeImage(localUrl);
           }
         } else {
           removeImage(localUrl);
         }
       } catch {
-        // Network error — remove broken image from draft
         removeImage(localUrl);
       } finally {
         setUploading((s) => {
@@ -74,7 +65,9 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
   return (
     <div className="flex flex-col gap-4 px-4 py-4">
       <div>
-        <h2 className="text-xl font-bold text-gray-900">Фотографии</h2>
+        <h2 className="text-xl font-bold text-gray-900">
+          Фотографии <span className="text-red-400">*</span>
+        </h2>
         <p className="mt-0.5 text-sm text-gray-500">
           До 5 фото · Первое будет обложкой
         </p>
@@ -82,7 +75,6 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
 
       {/* Photo grid */}
       <div className="grid grid-cols-3 gap-2">
-        {/* Existing images */}
         {draft.images.map((img, i) => (
           <div
             key={img.localUrl}
@@ -95,21 +87,18 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
               className="absolute inset-0 h-full w-full object-cover"
             />
 
-            {/* Cover badge on first photo */}
             {i === 0 && (
               <span className="absolute bottom-1.5 left-1.5 rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white">
                 Обложка
               </span>
             )}
 
-            {/* Upload spinner */}
             {uploading.has(img.localUrl) && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                 <Loader2 size={24} className="animate-spin text-white" />
               </div>
             )}
 
-            {/* Remove button */}
             <button
               type="button"
               onClick={() => removeImage(img.localUrl)}
@@ -120,13 +109,13 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
           </div>
         ))}
 
-        {/* Add button */}
+        {/* Add button — <label> directly triggers file picker without programmatic .click()
+            This is the correct way in Telegram iOS where inputRef.click() is blocked */}
         {canAddMore && (
-          <button
-            type="button"
-            onClick={() => inputRef.current?.click()}
+          <label
+            htmlFor="photo-upload"
             className="
-              flex aspect-square flex-col items-center justify-center gap-2
+              flex aspect-square cursor-pointer flex-col items-center justify-center gap-2
               rounded-2xl border-2 border-dashed border-gray-200
               bg-gray-50 transition-colors active:bg-gray-100
             "
@@ -135,12 +124,12 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
             <span className="text-xs text-gray-400">
               {draft.images.length === 0 ? "Добавить" : `${draft.images.length}/5`}
             </span>
-          </button>
+          </label>
         )}
       </div>
 
-      {/* Hint */}
-      {draft.images.length === 0 && (
+      {/* Hint — only when no photos and not skipped */}
+      {draft.images.length === 0 && !skipPhotos && (
         <div className="flex items-center gap-3 rounded-2xl bg-blue-50 p-4">
           <ImageIcon size={20} className="shrink-0 text-blue-400" />
           <p className="text-sm text-blue-700">
@@ -149,28 +138,44 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
         </div>
       )}
 
-      {/* Hidden file input */}
+      {/* "Без фото" — required choice when no photos added */}
+      {draft.images.length === 0 && (
+        <button
+          type="button"
+          onClick={() => setSkipPhotos((v) => !v)}
+          className={`
+            flex items-center gap-3 rounded-2xl border p-4 text-left transition-all
+            ${skipPhotos ? "border-primary bg-primary/5" : "border-gray-200 bg-white"}
+          `}
+        >
+          <span className={`
+            flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-all
+            ${skipPhotos ? "border-primary bg-primary" : "border-gray-300 bg-white"}
+          `}>
+            {skipPhotos && <span className="h-2 w-2 rounded-full bg-white" />}
+          </span>
+          <span className={`text-sm font-medium ${skipPhotos ? "text-primary" : "text-gray-500"}`}>
+            Продолжить без фото
+          </span>
+        </button>
+      )}
+
+      {/* Hidden file input — triggered via <label htmlFor="photo-upload"> above */}
       <input
-        ref={inputRef}
+        id="photo-upload"
         type="file"
         accept="image/*"
         multiple
-        className="hidden"
+        className="sr-only"
         onChange={(e) => handleFiles(e.target.files)}
       />
 
-      {/* Pill navigation button — fixed above bottom nav */}
+      {/* Pill navigation button */}
       <WizardNextButton
-        label={
-          uploading.size > 0
-            ? "Загрузка..."
-            : draft.images.length === 0
-            ? "Пропустить"
-            : "Далее"
-        }
+        label={isUploading ? "Загрузка..." : "Далее"}
         onClick={onNext}
-        disabled={uploading.size > 0}
-        loading={uploading.size > 0}
+        disabled={!canProceed}
+        loading={isUploading}
       />
     </div>
   );
