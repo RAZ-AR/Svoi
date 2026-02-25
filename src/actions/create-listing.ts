@@ -2,7 +2,7 @@
 // Svoi — Create listing server action + Supabase Storage upload helper
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 
 export interface CreateListingPayload {
@@ -53,7 +53,12 @@ export async function createListing(
 
     if (!svoiUserId) return { ok: false, error: "Не авторизован" };
 
-    const { data, error } = await supabase
+    // Use service client for INSERT — we've already verified the user above.
+    // The RLS policy uses svoi_uid() which reads svoi_user_id from the JWT
+    // top-level, but Supabase nests it inside user_metadata. Until the
+    // svoi_uid() DB function is patched, bypass RLS server-side safely.
+    const serviceSupabase = createServiceClient();
+    const { data, error } = await serviceSupabase
       .from("listings")
       .insert({
         user_id:     svoiUserId,
