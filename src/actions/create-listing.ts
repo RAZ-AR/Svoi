@@ -36,7 +36,21 @@ export async function createListing(
 
     // Get current svoi user id from auth session
     const { data: authData } = await supabase.auth.getUser();
-    const svoiUserId = authData.user?.user_metadata?.svoi_user_id as string | undefined;
+    if (!authData.user) return { ok: false, error: "Не авторизован" };
+
+    // Telegram auth sets svoi_user_id in metadata directly
+    let svoiUserId = authData.user.user_metadata?.svoi_user_id as string | undefined;
+
+    // Fallback for Google OAuth users: look up by auth_id in users table
+    if (!svoiUserId) {
+      const { data: userRow } = await supabase
+        .from("users")
+        .select("id")
+        .eq("auth_id", authData.user.id)
+        .single();
+      svoiUserId = userRow?.id;
+    }
+
     if (!svoiUserId) return { ok: false, error: "Не авторизован" };
 
     const { data, error } = await supabase
