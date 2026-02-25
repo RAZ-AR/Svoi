@@ -86,12 +86,14 @@ export async function createListing(
       .catch((e) => console.warn("[createListing] meili sync:", e));
 
     return { ok: true, listingId: data.id };
-  } catch (err) {
+  } catch (err: unknown) {
     console.error("[createListing]", err);
-    return {
-      ok: false,
-      error: err instanceof Error ? err.message : "Ошибка создания объявления",
-    };
+    // Expose the real Supabase/postgres error message for debugging
+    const msg =
+      (err as { message?: string })?.message ??
+      (err as { error_description?: string })?.error_description ??
+      JSON.stringify(err);
+    return { ok: false, error: msg };
   }
 }
 
