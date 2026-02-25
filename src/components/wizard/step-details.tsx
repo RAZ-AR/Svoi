@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useNewListingStore } from "@/store/new-listing.store";
 import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { useT } from "@/lib/i18n";
+import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 
 const CURRENCIES = ["EUR", "RSD", "USD"] as const;
 
@@ -146,19 +147,12 @@ export function StepDetails({ onNext }: StepDetailsProps) {
         </div>
       )}
 
-      <button
-        type="button"
+      {/* Pill navigation button — fixed above bottom nav */}
+      <WizardNextButton
+        label={t("common.next")}
         onClick={onNext}
         disabled={!canProceed}
-        className={cn(
-          "mt-2 w-full rounded-2xl py-3.5 text-sm font-semibold transition-all",
-          canProceed
-            ? "bg-primary text-white shadow-md shadow-primary/25 active:scale-[0.97]"
-            : "bg-gray-100 text-gray-400 cursor-not-allowed"
-        )}
-      >
-        {t("common.next")}
-      </button>
+      />
     </div>
   );
 }

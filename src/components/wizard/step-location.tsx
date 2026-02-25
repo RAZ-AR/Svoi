@@ -6,6 +6,7 @@ import { MapPin } from "lucide-react";
 import { useNewListingStore } from "@/store/new-listing.store";
 import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { BELGRADE_CENTER } from "@/lib/utils";
+import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 
 // Belgrade districts for quick pick
 const DISTRICTS = [
@@ -121,19 +122,14 @@ export function StepLocation({ onSubmit, isSubmitting }: StepLocationProps) {
         )}
       </div>
 
-      {/* Submit button (fallback) */}
-      <button
-        type="button"
+      {/* Pill navigation button — fixed above bottom nav */}
+      <WizardNextButton
+        label={isSubmitting ? "Публикуем…" : "Опубликовать"}
         onClick={onSubmit}
         disabled={isSubmitting}
-        className="
-          w-full rounded-2xl bg-green-500 py-4 text-sm font-bold text-white
-          shadow-lg shadow-green-500/25
-          transition-all active:scale-[0.97] disabled:opacity-60
-        "
-      >
-        {isSubmitting ? "Публикуем…" : "Опубликовать ✓"}
-      </button>
+        loading={isSubmitting}
+        variant="green"
+      />
     </div>
   );
 }

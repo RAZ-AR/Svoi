@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useNewListingStore } from "@/store/new-listing.store";
 import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
+import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 import type { Category } from "@/lib/supabase/database.types";
 
 interface StepCategoryProps {
@@ -45,6 +46,11 @@ export function StepCategory({ categories, onNext }: StepCategoryProps) {
         <h2 className="text-xl font-bold text-gray-900">Что продаёте?</h2>
         <p className="mt-0.5 text-sm text-gray-500">Выберите категорию объявления</p>
       </div>
+
+      {/* Pill navigation button — appears once category is picked */}
+      {selected !== null && (
+        <WizardNextButton label="Далее" onClick={onNext} />
+      )}
 
       {/* 2-column grid of category tiles */}
       <div className="grid grid-cols-2 gap-3">

@@ -2,12 +2,11 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
 import { Plus, X, ImageIcon, Loader2 } from "lucide-react";
 import { useNewListingStore } from "@/store/new-listing.store";
 import { useTelegramMainButton } from "@/hooks/use-telegram-main-button";
 import { getImageUploadUrl } from "@/actions/create-listing";
-import { cn } from "@/lib/utils";
+import { WizardNextButton } from "@/components/wizard/wizard-next-button";
 
 interface StepPhotosProps {
   onNext: () => void;
@@ -19,7 +18,7 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
   const [uploading, setUploading] = useState<Set<string>>(new Set());
 
   const canAddMore = draft.images.length < 5;
-  const allUploaded = draft.images.every((i) => i.storedUrl);
+  const allUploaded = draft.images.length === 0 || draft.images.every((i) => i.storedUrl);
 
   // Telegram MainButton: can proceed even without photos (optional)
   useTelegramMainButton({
@@ -39,26 +38,36 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
       // Immediate local preview
       const localUrl = URL.createObjectURL(file);
       addImage({ localUrl, file });
-
-      // Upload in background
       setUploading((s) => new Set(s).add(localUrl));
 
-      const result = await getImageUploadUrl(file.type);
-      if (result.ok) {
-        // PUT directly to Supabase signed URL
-        await fetch(result.uploadUrl, {
-          method: "PUT",
-          body: file,
-          headers: { "Content-Type": file.type },
+      try {
+        const result = await getImageUploadUrl(file.type);
+        if (result.ok) {
+          // PUT directly to Supabase signed URL
+          const res = await fetch(result.uploadUrl, {
+            method: "PUT",
+            body: file,
+            headers: { "Content-Type": file.type },
+          });
+          if (res.ok) {
+            updateImageUrl(localUrl, result.publicUrl);
+          } else {
+            // Upload failed — remove broken image from draft
+            removeImage(localUrl);
+          }
+        } else {
+          removeImage(localUrl);
+        }
+      } catch {
+        // Network error — remove broken image from draft
+        removeImage(localUrl);
+      } finally {
+        setUploading((s) => {
+          const next = new Set(s);
+          next.delete(localUrl);
+          return next;
         });
-        updateImageUrl(localUrl, result.publicUrl);
       }
-
-      setUploading((s) => {
-        const next = new Set(s);
-        next.delete(localUrl);
-        return next;
-      });
     }
   }
 
@@ -79,11 +88,11 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
             key={img.localUrl}
             className="relative aspect-square overflow-hidden rounded-2xl bg-gray-100"
           >
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={img.localUrl}
               alt={`Фото ${i + 1}`}
-              fill
-              className="object-cover"
+              className="absolute inset-0 h-full w-full object-cover"
             />
 
             {/* Cover badge on first photo */}
@@ -150,14 +159,19 @@ export function StepPhotos({ onNext }: StepPhotosProps) {
         onChange={(e) => handleFiles(e.target.files)}
       />
 
-      {/* Fallback button for non-Telegram */}
-      <button
-        type="button"
+      {/* Pill navigation button — fixed above bottom nav */}
+      <WizardNextButton
+        label={
+          uploading.size > 0
+            ? "Загрузка..."
+            : draft.images.length === 0
+            ? "Пропустить"
+            : "Далее"
+        }
         onClick={onNext}
-        className="mt-auto text-center text-sm text-gray-400 underline-offset-2 hover:underline"
-      >
-        {draft.images.length === 0 ? "Пропустить" : "Продолжить"}
-      </button>
+        disabled={uploading.size > 0}
+        loading={uploading.size > 0}
+      />
     </div>
   );
 }

@@ -95,8 +95,8 @@ export default function NewListingPage() {
       {/* Step progress */}
       <WizardProgress current={step} />
 
-      {/* Step content — animated slide */}
-      <div className="flex-1 overflow-y-auto animate-fade-in">
+      {/* Step content — animated slide; pb-24 clears the fixed pill button */}
+      <div className="flex-1 overflow-y-auto animate-fade-in pb-24">
         {step === 1 && (
           <StepCategory
             categories={categories}
