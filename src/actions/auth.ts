@@ -3,8 +3,7 @@
 "use server";
 
 import { verifyTelegramInitData } from "@/lib/telegram/verify-init-data";
-import { createServiceClient } from "@/lib/supabase/server";
-import { cookies } from "next/headers";
+import { createClient, createServiceClient } from "@/lib/supabase/server";
 
 export type TelegramAuthResult =
   | {
@@ -57,49 +56,41 @@ export async function authenticateWithTelegram(
     if (upsertError) throw upsertError;
     if (!svoiUser)   throw new Error("upsert_telegram_user returned null");
 
-    // ── Step 3: Create a Supabase Auth session ────────────────────────────────
-    // We use a custom JWT approach: sign in anonymously, then attach svoi_user_id
-    // to the JWT claims so our RLS helper public.svoi_uid() works.
-    //
-    // Strategy: use email OTP with a derived deterministic email, no actual email sent.
-    const fakeEmail = `tg_${tgUser.id}@svoi.telegram.internal`;
+    // ── Step 3: Ensure auth.users entry exists (service role — admin only) ──────
+    const fakeEmail    = `tg_${tgUser.id}@svoi.telegram.internal`;
     const fakePassword = derivePassword(tgUser.id, botToken);
 
-    // Try sign-in first; if user doesn't exist in auth.users yet, sign up
-    let sessionData = await serviceClient.auth.signInWithPassword({
+    // Check if auth user already exists by trying to sign in
+    const checkSignIn = await serviceClient.auth.signInWithPassword({
       email: fakeEmail,
       password: fakePassword,
     });
 
-    if (sessionData.error?.message.includes("Invalid login credentials")) {
-      // First time: create auth user
+    if (checkSignIn.error?.message.includes("Invalid login credentials")) {
+      // First time: create auth.users entry via admin API
       const signUp = await serviceClient.auth.admin.createUser({
-        email: fakeEmail,
-        password: fakePassword,
-        email_confirm: true,  // skip confirmation
+        email:         fakeEmail,
+        password:      fakePassword,
+        email_confirm: true,
         user_metadata: {
-          svoi_user_id:  svoiUser.id,
-          telegram_id:   tgUser.id,
-          first_name:    tgUser.first_name,
+          svoi_user_id: svoiUser.id,
+          telegram_id:  tgUser.id,
+          first_name:   tgUser.first_name,
         },
       });
       if (signUp.error) throw signUp.error;
-
-      // Now sign in
-      sessionData = await serviceClient.auth.signInWithPassword({
-        email: fakeEmail,
-        password: fakePassword,
-      });
     }
 
-    if (sessionData.error) throw sessionData.error;
+    // ── Step 4: Sign in via regular client so @supabase/ssr sets cookies ──────
+    // createClient() uses setAll() callback — writes sb-{ref}-auth-token cookie
+    // that subsequent server actions (createListing etc.) can read correctly.
+    const anonClient = await createClient();
+    const { error: signInError } = await anonClient.auth.signInWithPassword({
+      email:    fakeEmail,
+      password: fakePassword,
+    });
 
-    // ── Step 4: Set session cookie ─────────────────────────────────────────────
-    const cookieStore = await cookies();
-    const { access_token, refresh_token } = sessionData.data.session!;
-
-    cookieStore.set("sb-access-token",  access_token,  { httpOnly: true, secure: true, sameSite: "none", path: "/" });
-    cookieStore.set("sb-refresh-token", refresh_token, { httpOnly: true, secure: true, sameSite: "none", path: "/" });
+    if (signInError) throw signInError;
 
     return {
       ok: true,
