@@ -3,6 +3,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTelegram } from "@/components/telegram/telegram-provider";
 
@@ -20,12 +21,12 @@ export default function LoginPage() {
   }, [isTelegram, initData, router]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-[#EBEBEB] px-6">
 
       {/* Logo */}
-      <div className="mb-10 text-center">
-        <h1 className="text-5xl font-black tracking-tight text-gray-900">Svoi</h1>
-        <p className="mt-1 text-gray-400">Свой базар в Белграде</p>
+      <div className="mb-10 text-center flex flex-col items-center">
+        <Image src="/svoi.svg" alt="Svoi" width={140} height={48} priority />
+        <p className="mt-3 text-gray-400">Свой базар в Белграде</p>
       </div>
 
       {/* Card */}

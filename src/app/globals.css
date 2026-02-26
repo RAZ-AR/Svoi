@@ -19,27 +19,27 @@
 
 @layer base {
   :root {
-    /* ── Warm minimal theme — cream + sand + near-black ───────────────────── */
-    --background:   30 28% 94%;      /* warm cream #F5F0EB */
-    --foreground:   20 8% 12%;       /* near-black #1E1A17 */
-    --card:         30 20% 90%;      /* warm light gray #EDE8E2 */
-    --card-foreground: 20 8% 12%;
+    /* ── Svoi theme — gray bg + blue primary + pink accent ─────────────────── */
+    --background:   0 0% 92%;        /* #EBEBEB */
+    --foreground:   0 0% 10%;        /* #1A1A1A */
+    --card:         0 0% 88%;        /* #E0E0E0 */
+    --card-foreground: 0 0% 10%;
     --popover:      0 0% 100%;
-    --popover-foreground: 20 8% 12%;
-    --primary:      0 0% 10%;        /* near-black #1A1A1A — CTA buttons */
+    --popover-foreground: 0 0% 10%;
+    --primary:      199 100% 51%;    /* #03B2FF */
     --primary-foreground: 0 0% 100%;
-    --secondary:    30 24% 92%;      /* warm off-white */
-    --secondary-foreground: 20 8% 12%;
-    --muted:        28 20% 92%;
-    --muted-foreground: 25 10% 50%;
-    --accent:       35 34% 69%;      /* warm sand #C9B99A — active states */
-    --accent-foreground: 20 8% 12%;
+    --secondary:    0 0% 96%;        /* #F5F5F5 */
+    --secondary-foreground: 0 0% 10%;
+    --muted:        0 0% 90%;
+    --muted-foreground: 0 0% 53%;
+    --accent:       312 100% 50%;    /* #FF00B1 */
+    --accent-foreground: 0 0% 100%;
     --destructive:  0 72% 65%;
     --destructive-foreground: 0 0% 100%;
-    --border:       28 18% 87%;      /* #E5DED6 */
+    --border:       0 0% 85%;        /* #D9D9D9 */
     --input:        0 0% 100%;
-    --ring:         35 34% 69%;
-    --radius:       1.25rem;         /* 20px – generous rounding */
+    --ring:         199 100% 51%;    /* #03B2FF */
+    --radius:       1.25rem;
   }
 
   * {

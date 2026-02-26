@@ -9,7 +9,7 @@ export default function ChatsPage() {
   const { data: chats, isLoading } = useMyChats();
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F5F0EB]">
+    <div className="flex min-h-screen flex-col bg-[#EBEBEB]">
       <AppHeader title="Чаты" showLogo={false} />
 
       <div className="flex flex-col gap-2 px-4 pt-2">

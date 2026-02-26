@@ -21,11 +21,11 @@ export function SearchBar() {
         transition-all active:scale-[0.98]
       "
     >
-      <Search size={18} className="shrink-0 text-[#A89070]" />
-      <span className="flex-1 text-sm text-[#A89070]">
+      <Search size={18} className="shrink-0 text-[#999999]" />
+      <span className="flex-1 text-sm text-[#999999]">
         {t("home.search_placeholder")}
       </span>
-      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F5F0EB]">
+      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#EBEBEB]">
         <SlidersHorizontal size={13} className="text-[#1A1A1A]" />
       </span>
     </button>

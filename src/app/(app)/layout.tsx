@@ -33,7 +33,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="tg-viewport flex flex-col bg-[#F5F0EB]">
+    <div className="tg-viewport flex flex-col bg-[#EBEBEB]">
       {/* Scrollable content — pb-28 leaves room for the floating nav pill */}
       <main className="flex-1 overflow-y-auto pb-28">
         {children}

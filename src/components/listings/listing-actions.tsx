@@ -69,7 +69,7 @@ export function ListingActions({
   }
 
   return (
-    <div className="sticky bottom-0 z-40 bg-[#F5F0EB] px-5 py-4">
+    <div className="sticky bottom-0 z-40 bg-[#EBEBEB] px-5 py-4">
       <div className="flex items-center gap-3">
 
         {/* Price */}
@@ -84,13 +84,13 @@ export function ListingActions({
           type="button"
           onClick={handleFav}
           disabled={favLoading}
-          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#E5DED6] bg-white transition-colors active:bg-[#EDE8E2]"
+          className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#D9D9D9] bg-white transition-colors active:bg-[#E0E0E0]"
         >
           <Heart
             size={20}
             className={cn(
               "transition-all",
-              fav ? "fill-red-500 stroke-red-500" : "stroke-[#8A7255]",
+              fav ? "fill-red-500 stroke-red-500" : "stroke-[#888888]",
               favLoading && "opacity-50"
             )}
           />
@@ -101,7 +101,7 @@ export function ListingActions({
           <button
             type="button"
             onClick={handleCall}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#E5DED6] bg-white transition-colors active:bg-[#EDE8E2]"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#D9D9D9] bg-white transition-colors active:bg-[#E0E0E0]"
           >
             <Phone size={18} className="text-[#1A1A1A]" />
           </button>

@@ -35,7 +35,7 @@ export function PromoBanner() {
 export function PromoStrip() {
   const t = useT();
   return (
-    <div className="flex items-center justify-center gap-2 rounded-full bg-[#EDE8E2] px-4 py-2.5 text-xs text-[#1A1A1A]">
+    <div className="flex items-center justify-center gap-2 rounded-full bg-[#E0E0E0] px-4 py-2.5 text-xs text-[#1A1A1A]">
       <span>🎉</span>
       <span>
         {t("home.promo_strip")}{" "}

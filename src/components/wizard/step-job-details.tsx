@@ -104,7 +104,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                   className={cn(
                     "rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
                     draft.jobSphere === s
-                      ? "border-[#45B8C0] bg-[#45B8C0] text-white"
+                      ? "border-[#03B2FF] bg-[#03B2FF] text-white"
                       : "border-gray-200 bg-white text-gray-600"
                   )}
                 >
@@ -129,7 +129,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                       className={cn(
                         "rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
                         draft.jobExperience === opt.value
-                          ? "border-[#45B8C0] bg-[#45B8C0] text-white"
+                          ? "border-[#03B2FF] bg-[#03B2FF] text-white"
                           : "border-gray-200 bg-white text-gray-600"
                       )}
                     >
@@ -148,7 +148,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                   placeholder="Кратко о себе, навыках, пожеланиях…"
                   rows={4}
                   maxLength={1000}
-                  className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                  className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                 />
               </div>
 
@@ -164,7 +164,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                     onChange={(e) => updateDraft({ price: e.target.value })}
                     placeholder="0"
                     min={0}
-                    className="flex-1 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                    className="flex-1 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                   />
                   <div className="flex overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
                     {(["EUR", "RSD"] as const).map((c) => (
@@ -238,7 +238,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                   value={draft.jobPosition}
                   onChange={(e) => updateDraft({ jobPosition: e.target.value })}
                   placeholder="Frontend Developer, Менеджер, Повар…"
-                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                 />
               </div>
 
@@ -253,7 +253,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                   value={draft.jobCompany}
                   onChange={(e) => updateDraft({ jobCompany: e.target.value })}
                   placeholder="Название компании"
-                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                 />
               </div>
 
@@ -268,7 +268,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                   value={draft.jobWebsite}
                   onChange={(e) => updateDraft({ jobWebsite: e.target.value })}
                   placeholder="https://company.com"
-                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                  className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                 />
               </div>
 
@@ -281,7 +281,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                   placeholder="Что нужно уметь, условия работы, график…"
                   rows={5}
                   maxLength={2000}
-                  className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                  className="w-full resize-none rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                 />
               </div>
 
@@ -297,7 +297,7 @@ export function StepJobDetails({ onNext }: StepJobDetailsProps) {
                     onChange={(e) => updateDraft({ price: e.target.value })}
                     placeholder="0"
                     min={0}
-                    className="flex-1 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+                    className="flex-1 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
                   />
                   <div className="flex overflow-hidden rounded-2xl border border-gray-200 bg-gray-50">
                     {(["EUR", "RSD"] as const).map((c) => (

@@ -34,13 +34,13 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#F5F0EB]">
+    <div className="flex min-h-screen flex-col bg-[#EBEBEB]">
       <AppHeader title={t("profile.title")} showLogo={false} />
 
       {/* ── Profile card ──────────────────────────────────────────────────── */}
       <div className="mx-4 mt-2 overflow-hidden rounded-3xl bg-white">
         <div className="flex items-center gap-4 p-5">
-          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-[#EDE8E2]">
+          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-[#E0E0E0]">
             {user.avatar_url ? (
               <Image
                 src={user.avatar_url}
@@ -50,7 +50,7 @@ export default function ProfilePage() {
                 className="object-cover"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-[#A89070]">
+              <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-[#999999]">
                 {user.first_name?.[0]?.toUpperCase()}
               </div>
             )}
@@ -61,22 +61,22 @@ export default function ProfilePage() {
               {user.first_name} {user.last_name}
             </p>
             {user.telegram_username && (
-              <p className="text-sm text-[#A89070]">@{user.telegram_username}</p>
+              <p className="text-sm text-[#999999]">@{user.telegram_username}</p>
             )}
             {user.location && (
-              <p className="mt-0.5 text-xs text-[#A89070]">📍 {user.location}</p>
+              <p className="mt-0.5 text-xs text-[#999999]">📍 {user.location}</p>
             )}
           </div>
 
           <Link
             href="/profile/edit"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#F5F0EB] transition-colors active:bg-[#EDE8E2]"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-[#EBEBEB] transition-colors active:bg-[#E0E0E0]"
           >
-            <Settings size={18} className="text-[#6B5E50]" />
+            <Settings size={18} className="text-[#555555]" />
           </Link>
         </div>
 
-        <div className="flex divide-x divide-[#EDE8E2] border-t border-[#EDE8E2]">
+        <div className="flex divide-x divide-[#E0E0E0] border-t border-[#E0E0E0]">
           <StatCell label={t("profile.listings")} value={stats?.listingsCount ?? 0} />
           <StatCell label={t("profile.active")}   value={stats?.activeCount   ?? 0} />
           <StatCell label={t("profile.views")}    value={formatViews(stats?.totalViews ?? 0)} />
@@ -90,21 +90,21 @@ export default function ProfilePage() {
           label={t("profile.my_listings")}
           hint={stats?.activeCount ? t("profile.active_count", { n: stats.activeCount }) : undefined}
           href="/listings/my"
-          iconBg="bg-[#EDE8E2] text-[#1A1A1A]"
+          iconBg="bg-[#E0E0E0] text-[#1A1A1A]"
         />
-        <div className="h-px bg-[#F5F0EB]" />
+        <div className="h-px bg-[#EBEBEB]" />
         <MenuRow
           icon={<MessageCircle size={18} />}
           label={t("profile.my_chats")}
           href="/chats"
-          iconBg="bg-[#EDE8E2] text-[#1A1A1A]"
+          iconBg="bg-[#E0E0E0] text-[#1A1A1A]"
         />
-        <div className="h-px bg-[#F5F0EB]" />
+        <div className="h-px bg-[#EBEBEB]" />
         <MenuRow
           icon={<Star size={18} />}
           label={t("profile.favorites")}
           href="/favorites"
-          iconBg="bg-[#EDE8E2] text-[#8A7255]"
+          iconBg="bg-[#E0E0E0] text-[#888888]"
         />
       </div>
 
@@ -114,14 +114,14 @@ export default function ProfilePage() {
           icon={<Settings size={18} />}
           label={t("profile.edit_profile")}
           href="/profile/edit"
-          iconBg="bg-[#EDE8E2] text-[#6B5E50]"
+          iconBg="bg-[#E0E0E0] text-[#555555]"
         />
       </div>
 
       {/* ── Language switcher ─────────────────────────────────────────────── */}
       <div className="mx-4 mt-4 overflow-hidden rounded-3xl bg-white shadow-sm">
         <div className="flex items-center gap-3 px-4 py-4">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#EDE8E2] text-[#6B5E50]">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E0E0E0] text-[#555555]">
             <Globe size={18} />
           </span>
           <div className="flex-1">
@@ -137,7 +137,7 @@ export default function ProfilePage() {
                   "rounded-xl px-3 py-1.5 text-xs font-semibold transition-all active:scale-95",
                   locale === l
                     ? "bg-[#1A1A1A] text-white shadow-sm"
-                    : "bg-[#EDE8E2] text-[#6B5E50]"
+                    : "bg-[#E0E0E0] text-[#555555]"
                 )}
               >
                 {flag(l as Locale)} {label(l as Locale)}
@@ -152,7 +152,7 @@ export default function ProfilePage() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex w-full items-center gap-3 px-4 py-4 transition-colors active:bg-[#F5F0EB]"
+          className="flex w-full items-center gap-3 px-4 py-4 transition-colors active:bg-[#EBEBEB]"
         >
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-red-50 text-red-500">
             <LogOut size={18} />
@@ -191,7 +191,7 @@ function MenuRow({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 px-4 py-4 transition-colors active:bg-[#F5F0EB]"
+      className="flex items-center gap-3 px-4 py-4 transition-colors active:bg-[#EBEBEB]"
     >
       <span className={cn("flex h-9 w-9 items-center justify-center rounded-full", iconBg)}>
         {icon}

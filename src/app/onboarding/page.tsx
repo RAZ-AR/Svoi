@@ -83,7 +83,7 @@ export default function OnboardingPage() {
 
       {/* Greeting */}
       <div className="mb-8">
-        <p className="text-sm font-medium text-[#45B8C0]">Добро пожаловать!</p>
+        <p className="text-sm font-medium text-[#03B2FF]">Добро пожаловать!</p>
         <h1 className="mt-1 text-3xl font-bold tracking-tight text-gray-900">
           Привет, {tgFirst} 👋
         </h1>
@@ -111,7 +111,7 @@ export default function OnboardingPage() {
                 </div>
               )}
             </div>
-            <div className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#45B8C0] shadow-md">
+            <div className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#03B2FF] shadow-md">
               {uploading
                 ? <Loader2 size={14} className="animate-spin text-white" />
                 : <Camera size={14} className="text-white" />
@@ -132,7 +132,7 @@ export default function OnboardingPage() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Как тебя зовут?"
-            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
           />
         </div>
 
@@ -150,7 +150,7 @@ export default function OnboardingPage() {
                 onClick={() => setLocation(location === d ? "" : d)}
                 className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
                   location === d
-                    ? "border-[#45B8C0] bg-[#45B8C0] text-white"
+                    ? "border-[#03B2FF] bg-[#03B2FF] text-white"
                     : "border-gray-200 bg-white text-gray-600"
                 }`}
               >
@@ -163,7 +163,7 @@ export default function OnboardingPage() {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Или напиши: «Нови Београд, Блок 45»"
-            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
           />
         </div>
 
@@ -178,7 +178,7 @@ export default function OnboardingPage() {
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
             max={new Date().toISOString().split("T")[0]}
-            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
           />
         </div>
       </div>

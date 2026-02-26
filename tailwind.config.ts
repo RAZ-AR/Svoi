@@ -11,22 +11,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand palette — warm cream + sand + near-black (minimal furniture style)
+        // Brand palette — gray bg + blue + pink
         svoi: {
-          50:  "#faf7f4",
-          100: "#f5f0eb",
-          200: "#ede8e2",
-          300: "#e5ded6",
-          400: "#c9b99a",
-          500: "#a89070",
-          600: "#8a7255",
-        },
-        sand: {
-          100: "#f5f0eb",
-          200: "#ede8e2",
-          300: "#e0d8ce",
-          400: "#c9b99a",
-          500: "#b0986e",
+          blue:  "#03B2FF",
+          pink:  "#FF00B1",
+          bg:    "#EBEBEB",
+          card:  "#E0E0E0",
+          border:"#D9D9D9",
+          muted: "#888888",
         },
         // Semantic tokens (light theme)
         background: "hsl(var(--background))",

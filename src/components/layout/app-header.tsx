@@ -1,5 +1,6 @@
 // Svoi — App top header: large title left + action buttons right
 import Link from "next/link";
+import Image from "next/image";
 import { Bell } from "lucide-react";
 
 interface AppHeaderProps {
@@ -16,13 +17,8 @@ export function AppHeader({
   return (
     <header className="flex items-start justify-between px-5 pb-2 pt-5">
       {showLogo ? (
-        <Link href="/home" className="flex flex-col">
-          <span className="text-[28px] font-black leading-tight tracking-tight text-[#1A1A1A]">
-            Svoi
-          </span>
-          <span className="text-xs text-[#A89070] font-medium -mt-0.5">
-            Свой базар
-          </span>
+        <Link href="/home" className="flex items-center">
+          <Image src="/svoi.svg" alt="Svoi" width={100} height={34} priority />
         </Link>
       ) : (
         <h1 className="text-[28px] font-black leading-tight tracking-tight text-[#1A1A1A]">
@@ -34,7 +30,7 @@ export function AppHeader({
         {rightSlot}
         <Link
           href="/notifications"
-          className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition-colors active:bg-[#EDE8E2]"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm transition-colors active:bg-[#E0E0E0]"
         >
           <Bell size={18} className="text-[#1A1A1A]" />
         </Link>

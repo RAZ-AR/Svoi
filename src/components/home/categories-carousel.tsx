@@ -42,7 +42,7 @@ export function CategoriesCarousel({ categories }: CategoriesCarouselProps) {
       </div>
 
       {/* Fade hint — matches warm cream background */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-[#F5F0EB]" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-10 bg-gradient-to-l from-[#EBEBEB]" />
     </div>
   );
 }
@@ -67,7 +67,7 @@ function CategoryChip({
         "border text-sm font-medium transition-all duration-150 active:scale-95",
         isActive
           ? "border-[#C9B99A] bg-[#C9B99A] text-[#1A1A1A]"
-          : "border-[#E5DED6] bg-white text-[#6B5E50]"
+          : "border-[#D9D9D9] bg-white text-[#555555]"
       )}
     >
       <span className="text-base leading-none">{category.emoji ?? "📌"}</span>
@@ -84,7 +84,7 @@ export function CategoriesCarouselSkeleton() {
       {Array.from({ length: 5 }).map((_, i) => (
         <div
           key={i}
-          className="h-9 w-24 shrink-0 animate-pulse rounded-full bg-[#EDE8E2]"
+          className="h-9 w-24 shrink-0 animate-pulse rounded-full bg-[#E0E0E0]"
         />
       ))}
     </div>

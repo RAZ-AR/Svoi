@@ -109,7 +109,7 @@ export default function EditProfilePage() {
                 </div>
               )}
             </div>
-            <div className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#45B8C0] shadow-md">
+            <div className="absolute bottom-0 right-0 flex h-8 w-8 items-center justify-center rounded-full bg-[#03B2FF] shadow-md">
               {uploading
                 ? <Loader2 size={14} className="animate-spin text-white" />
                 : <Camera size={14} className="text-white" />
@@ -141,7 +141,7 @@ export default function EditProfilePage() {
                 className={cn(
                   "rounded-full border px-3 py-1.5 text-xs font-medium transition-all",
                   location === d
-                    ? "border-[#45B8C0] bg-[#45B8C0] text-white"
+                    ? "border-[#03B2FF] bg-[#03B2FF] text-white"
                     : "border-gray-200 text-gray-600"
                 )}
               >
@@ -154,7 +154,7 @@ export default function EditProfilePage() {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Или напиши: «Нови Београд, Блок 45»"
-            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
           />
         </div>
 
@@ -169,7 +169,7 @@ export default function EditProfilePage() {
             value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
             max={new Date().toISOString().split("T")[0]}
-            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+            className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
           />
         </div>
 
@@ -202,7 +202,7 @@ function Field({ label, value, onChange, placeholder, type = "text", required }:
         type={type} value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#45B8C0] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#45B8C0]/20"
+        className="w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-base text-gray-900 placeholder:text-gray-400 focus:border-[#03B2FF] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#03B2FF]/20"
       />
     </div>
   );

@@ -27,7 +27,7 @@ export function ListingCard({
     <Link
       href={`/listings/${listing.id}`}
       className={cn(
-        "group relative flex flex-col overflow-hidden rounded-[1.25rem] bg-[#EDE8E2]",
+        "group relative flex flex-col overflow-hidden rounded-[1.25rem] bg-[#E0E0E0]",
         "transition-transform duration-150 active:scale-[0.97]",
         className
       )}
@@ -59,7 +59,7 @@ export function ListingCard({
             size={15}
             className={cn(
               "transition-colors",
-              isFavorite ? "fill-red-500 stroke-red-500" : "stroke-[#8A7255]"
+              isFavorite ? "fill-red-500 stroke-red-500" : "stroke-[#888888]"
             )}
           />
         </button>
@@ -74,7 +74,7 @@ export function ListingCard({
           {formatPrice(listing.price, listing.currency)}
         </p>
         {listing.address && (
-          <p className="truncate text-xs text-[#A89070]">
+          <p className="truncate text-xs text-[#999999]">
             {listing.address}
           </p>
         )}
@@ -88,7 +88,7 @@ export function ListingCard({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-0.5 rounded-full bg-[#E8F4F8] px-2 py-0.5 text-[10px] font-medium text-[#2D7A8F] hover:bg-[#D0EBF5]"
+              className="inline-flex items-center gap-0.5 rounded-full bg-[#E0F4FF] px-2 py-0.5 text-[10px] font-medium text-[#0090CC] hover:bg-[#CCE8FF]"
             >
               📌 @{(listing as any).tg_channel}
             </a>
@@ -101,7 +101,7 @@ export function ListingCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-0.5 rounded-full bg-[#E8F4F8] px-2 py-0.5 text-[10px] font-medium text-[#2D7A8F] hover:bg-[#D0EBF5]"
+                className="inline-flex items-center gap-0.5 rounded-full bg-[#E0F4FF] px-2 py-0.5 text-[10px] font-medium text-[#0090CC] hover:bg-[#CCE8FF]"
               >
                 📌 @{src.channel}
               </a>
@@ -126,11 +126,11 @@ export function ListingCard({
 
 export function ListingCardSkeleton({ className }: { className?: string }) {
   return (
-    <div className={cn("overflow-hidden rounded-[1.25rem] bg-[#EDE8E2]", className)}>
-      <div className="aspect-square w-full animate-pulse bg-[#E5DED6]" />
+    <div className={cn("overflow-hidden rounded-[1.25rem] bg-[#E0E0E0]", className)}>
+      <div className="aspect-square w-full animate-pulse bg-[#D9D9D9]" />
       <div className="space-y-2 p-3">
-        <div className="h-3.5 w-3/4 animate-pulse rounded-full bg-[#E5DED6]" />
-        <div className="h-4 w-1/2 animate-pulse rounded-full bg-[#E5DED6]" />
+        <div className="h-3.5 w-3/4 animate-pulse rounded-full bg-[#D9D9D9]" />
+        <div className="h-4 w-1/2 animate-pulse rounded-full bg-[#D9D9D9]" />
       </div>
     </div>
   );
