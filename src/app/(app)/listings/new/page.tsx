@@ -12,6 +12,7 @@ import { WizardProgress } from "@/components/wizard/wizard-progress";
 import { StepCategory } from "@/components/wizard/step-category";
 import { StepPhotos } from "@/components/wizard/step-photos";
 import { StepDetails } from "@/components/wizard/step-details";
+import { StepJobDetails } from "@/components/wizard/step-job-details";
 import { StepLocation } from "@/components/wizard/step-location";
 import { WizardSuccess } from "@/components/wizard/wizard-success";
 
@@ -46,17 +47,31 @@ export default function NewListingPage() {
       .filter((i) => i.storedUrl)
       .map((i) => ({ url: i.storedUrl! }));
 
+    const isJob = draft.categoryEmoji === "💼";
+
     const res = await createListing({
-      categoryId:  draft.categoryId!,
-      title:       draft.title.trim(),
-      description: draft.description.trim(),
-      price:       draft.price ? parseFloat(draft.price) : null,
-      currency:    draft.currency,
-      address:     draft.address.trim(),
-      lat:         draft.lat,
-      lng:         draft.lng,
+      categoryId:      draft.categoryId!,
+      title:           isJob
+        ? (draft.jobType === "seeking"
+            ? `Ищу работу — ${draft.jobSphere}`
+            : `${draft.jobPosition} — ${draft.jobSphere}`)
+        : draft.title.trim(),
+      description:     draft.description.trim(),
+      price:           draft.price ? parseFloat(draft.price) : null,
+      currency:        draft.currency,
+      address:         draft.address.trim(),
+      lat:             draft.lat,
+      lng:             draft.lng,
       images,
-      eventDate:   draft.eventDate || null,
+      eventDate:       draft.eventDate || null,
+      jobType:         isJob ? draft.jobType        : null,
+      jobSphere:       isJob ? draft.jobSphere       : null,
+      jobExperience:   isJob ? draft.jobExperience   : null,
+      jobCompany:      isJob ? draft.jobCompany      : null,
+      jobWebsite:      isJob ? draft.jobWebsite      : null,
+      jobPosition:     isJob ? draft.jobPosition     : null,
+      jobRequirements: isJob ? draft.jobRequirements : null,
+      jobResumeUrl:    isJob ? draft.jobResumeUrl    : null,
     });
 
     setSubmitting(false);
@@ -107,7 +122,9 @@ export default function NewListingPage() {
           <StepPhotos onNext={nextStep} />
         )}
         {step === 3 && (
-          <StepDetails onNext={nextStep} />
+          draft.categoryEmoji === "💼"
+            ? <StepJobDetails onNext={nextStep} />
+            : <StepDetails onNext={nextStep} />
         )}
         {step === 4 && (
           <StepLocation

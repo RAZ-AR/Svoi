@@ -3,7 +3,7 @@
 
 import { useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, MoreHorizontal, Eye, Calendar, MapPin } from "lucide-react";
+import { ArrowLeft, MoreHorizontal, Eye, Calendar, MapPin, Briefcase, Building2, Globe, FileText } from "lucide-react";
 import { useTelegramBack } from "@/hooks/use-telegram-back";
 import { useAuth } from "@/components/auth/auth-provider";
 import { ListingGallery } from "@/components/listings/listing-gallery";
@@ -136,6 +136,12 @@ export function ListingDetailClient({ listing }: ListingDetailClientProps) {
           </div>
         )}
 
+        {/* ── Job details block ──────────────────────────────────────────── */}
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {(listing as any).job_type && (
+          <JobDetailsBlock listing={listing as any} />
+        )}
+
         {/* Map */}
         {listing.lat && listing.lng && (
           <div className="overflow-hidden rounded-2xl">
@@ -192,6 +198,94 @@ function ExpandableDescription({ text }: { text: string }) {
         </div>
       ) : (
         <p className="text-sm leading-relaxed text-[#6B5E50]">{text}</p>
+      )}
+    </div>
+  );
+}
+
+// ─── Job details block ──────────────────────────────────────────────────────
+
+const EXPERIENCE_LABELS: Record<string, string> = {
+  no_exp: "Без опыта",
+  "1_3":  "1–3 года",
+  "3_5":  "3–5 лет",
+  "5_plus": "5+ лет",
+};
+
+function JobDetailsBlock({ listing }: { listing: Record<string, unknown> }) {
+  const isSeeking = listing.job_type === "seeking";
+
+  return (
+    <div className="flex flex-col gap-3 rounded-2xl bg-[#EDE8E2] p-4">
+      {/* Type badge */}
+      <div className="flex items-center gap-2">
+        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
+          isSeeking ? "bg-blue-100 text-blue-700" : "bg-green-100 text-green-700"
+        }`}>
+          {isSeeking ? "🔍 Ищу работу" : "💼 Вакансия"}
+        </span>
+        {listing.job_sphere && (
+          <span className="rounded-full bg-white px-3 py-1 text-xs font-medium text-[#8A7255]">
+            {listing.job_sphere as string}
+          </span>
+        )}
+      </div>
+
+      {/* Seeking: experience */}
+      {isSeeking && listing.job_experience && (
+        <div className="flex items-center gap-2 text-sm text-[#1A1A1A]">
+          <Briefcase size={14} className="text-[#8A7255]" />
+          <span>Опыт: {EXPERIENCE_LABELS[listing.job_experience as string] ?? listing.job_experience as string}</span>
+        </div>
+      )}
+
+      {/* Offering: position */}
+      {!isSeeking && listing.job_position && (
+        <div className="flex items-center gap-2 text-sm font-semibold text-[#1A1A1A]">
+          <Briefcase size={14} className="text-[#8A7255]" />
+          <span>{listing.job_position as string}</span>
+        </div>
+      )}
+
+      {/* Offering: company */}
+      {!isSeeking && listing.job_company && (
+        <div className="flex items-center gap-2 text-sm text-[#1A1A1A]">
+          <Building2 size={14} className="text-[#8A7255]" />
+          <span>{listing.job_company as string}</span>
+        </div>
+      )}
+
+      {/* Offering: website */}
+      {!isSeeking && listing.job_website && (
+        <a
+          href={listing.job_website as string}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-sm text-[#2D7A8F]"
+        >
+          <Globe size={14} />
+          <span className="truncate">{(listing.job_website as string).replace(/^https?:\/\//, "")}</span>
+        </a>
+      )}
+
+      {/* Offering: requirements */}
+      {!isSeeking && listing.job_requirements && (
+        <p className="text-sm leading-relaxed text-[#6B5E50]">
+          {listing.job_requirements as string}
+        </p>
+      )}
+
+      {/* Seeking: resume PDF */}
+      {isSeeking && listing.job_resume_url && (
+        <a
+          href={listing.job_resume_url as string}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 rounded-xl bg-white px-3 py-2.5 text-sm font-medium text-[#1A1A1A]"
+        >
+          <FileText size={16} className="text-[#8A7255]" />
+          Скачать резюме (PDF)
+        </a>
       )}
     </div>
   );

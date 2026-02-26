@@ -28,6 +28,15 @@ export interface NewListingDraft {
   address: string;
   lat: number | null;
   lng: number | null;
+  // Jobs category extra fields
+  jobType: "seeking" | "offering" | null;
+  jobSphere: string;
+  jobExperience: string;
+  jobCompany: string;
+  jobWebsite: string;
+  jobPosition: string;
+  jobRequirements: string;
+  jobResumeUrl: string;
 }
 
 interface NewListingStore {
@@ -47,18 +56,26 @@ interface NewListingStore {
 }
 
 const INITIAL_DRAFT: NewListingDraft = {
-  categoryId:    null,
-  categoryName:  "",
-  categoryEmoji: "",
-  images:        [],
-  title:         "",
-  description:   "",
-  price:         "",
-  currency:      "EUR",
-  eventDate:     "",
-  address:       "",
-  lat:           null,
-  lng:           null,
+  categoryId:      null,
+  categoryName:    "",
+  categoryEmoji:   "",
+  images:          [],
+  title:           "",
+  description:     "",
+  price:           "",
+  currency:        "EUR",
+  eventDate:       "",
+  address:         "",
+  lat:             null,
+  lng:             null,
+  jobType:         null,
+  jobSphere:       "",
+  jobExperience:   "",
+  jobCompany:      "",
+  jobWebsite:      "",
+  jobPosition:     "",
+  jobRequirements: "",
+  jobResumeUrl:    "",
 };
 
 export const useNewListingStore = create<NewListingStore>((set) => ({

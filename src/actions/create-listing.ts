@@ -6,16 +6,25 @@ import { createClient, createServiceClient } from "@/lib/supabase/server";
 import { nanoid } from "nanoid";
 
 export interface CreateListingPayload {
-  categoryId:  number;
-  title:       string;
-  description: string;
-  price:       number | null;
-  currency:    string;
-  address:     string;
-  lat:         number | null;
-  lng:         number | null;
-  images:      { url: string }[];
-  eventDate:   string | null;
+  categoryId:      number;
+  title:           string;
+  description:     string;
+  price:           number | null;
+  currency:        string;
+  address:         string;
+  lat:             number | null;
+  lng:             number | null;
+  images:          { url: string }[];
+  eventDate:       string | null;
+  // Jobs
+  jobType?:        "seeking" | "offering" | null;
+  jobSphere?:      string | null;
+  jobExperience?:  string | null;
+  jobCompany?:     string | null;
+  jobWebsite?:     string | null;
+  jobPosition?:    string | null;
+  jobRequirements?: string | null;
+  jobResumeUrl?:   string | null;
 }
 
 export type CreateListingResult =
@@ -70,9 +79,17 @@ export async function createListing(
         address:     payload.address.trim() || null,
         lat:         payload.lat,
         lng:         payload.lng,
-        images:      payload.images,
-        status:      "active",
-        event_date:  payload.eventDate || null,
+        images:           payload.images,
+        status:           "active",
+        event_date:       payload.eventDate       || null,
+        job_type:         payload.jobType         || null,
+        job_sphere:       payload.jobSphere       || null,
+        job_experience:   payload.jobExperience   || null,
+        job_company:      payload.jobCompany      || null,
+        job_website:      payload.jobWebsite      || null,
+        job_position:     payload.jobPosition     || null,
+        job_requirements: payload.jobRequirements || null,
+        job_resume_url:   payload.jobResumeUrl    || null,
       })
       .select("id")
       .single();
@@ -127,6 +144,34 @@ export async function getImageUploadUrl(
     return { ok: true, uploadUrl: data.signedUrl, publicUrl };
   } catch (err) {
     console.error("[getImageUploadUrl]", err);
+    return {
+      ok: false,
+      error: err instanceof Error ? err.message : "Ошибка загрузки",
+    };
+  }
+}
+
+/** Generates a pre-signed upload URL for a PDF resume in the "files" bucket */
+export async function getResumeUploadUrl(): Promise<
+  { ok: true; uploadUrl: string; publicUrl: string } | { ok: false; error: string }
+> {
+  try {
+    const supabase = await createClient();
+    const path = `resumes/${nanoid(12)}.pdf`;
+
+    const { data, error } = await supabase.storage
+      .from("files")
+      .createSignedUploadUrl(path);
+
+    if (error) throw error;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from("files")
+      .getPublicUrl(path);
+
+    return { ok: true, uploadUrl: data.signedUrl, publicUrl };
+  } catch (err) {
+    console.error("[getResumeUploadUrl]", err);
     return {
       ok: false,
       error: err instanceof Error ? err.message : "Ошибка загрузки",
