@@ -17,16 +17,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const isFullscreen = FULLSCREEN_ROUTES.some((r) => pathname.startsWith(r));
 
   // Auth guard: redirect to root if not authenticated
-  // In development, skip auth guard so listings can be previewed without login
-  const isDev = process.env.NODE_ENV === "development";
-
   useEffect(() => {
-    if (!isDev && (auth.status === "unauthenticated" || auth.status === "error")) {
+    if (auth.status === "unauthenticated" || auth.status === "error") {
       router.replace("/");
     }
-  }, [auth.status, router, isDev]);
+  }, [auth.status, router]);
 
-  if (!isDev && (auth.status === "loading" || auth.status !== "authenticated")) {
+  if (auth.status === "loading" || auth.status !== "authenticated") {
     return null;
   }
 

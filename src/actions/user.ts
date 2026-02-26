@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import type { SvoiUser } from "@/lib/supabase/database.types";
 
 export type ProfileUpdate = Partial<
-  Pick<SvoiUser, "phone" | "location" | "email" | "first_name" | "last_name" | "completed_profile" | "avatar_url">
+  Pick<SvoiUser, "location" | "first_name" | "last_name" | "completed_profile" | "avatar_url" | "birthday">
 >;
 
 /** Update current user's profile */

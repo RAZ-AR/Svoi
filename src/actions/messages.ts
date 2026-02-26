@@ -161,7 +161,68 @@ export async function sendMessage(
     .single();
 
   if (error) return { ok: false, error: error.message };
+
+  // Notify recipient via Telegram bot (fire-and-forget)
+  notifyRecipientViaTg(chatId, svoiUid, text?.trim() ?? null).catch(() => {});
+
   return { ok: true, message: data as MessageRow };
+}
+
+// ─── Telegram notification helper ─────────────────────────────────────────────
+
+async function notifyRecipientViaTg(
+  chatId:   string,
+  senderId: string,
+  text:     string | null
+) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const appUrl   = process.env.NEXT_PUBLIC_APP_URL;
+  if (!botToken || !appUrl) return;
+
+  const { createServiceClient } = await import("@/lib/supabase/server");
+  const service = createServiceClient();
+
+  const { data: chat } = await service
+    .from("chats")
+    .select(`
+      listing:listings!listing_id(title),
+      user1:users!user1_id(id, first_name, telegram_id),
+      user2:users!user2_id(id, first_name, telegram_id)
+    `)
+    .eq("id", chatId)
+    .single();
+
+  if (!chat) return;
+
+  const u1 = chat.user1 as { id: string; first_name: string; telegram_id: number | null };
+  const u2 = chat.user2 as { id: string; first_name: string; telegram_id: number | null };
+  const sender    = u1.id === senderId ? u1 : u2;
+  const recipient = u1.id === senderId ? u2 : u1;
+
+  if (!recipient.telegram_id) return;
+
+  const listingTitle = (chat.listing as { title: string } | null)?.title ?? "объявление";
+  const preview = text ? `\n\n_${text.slice(0, 120)}${text.length > 120 ? "…" : ""}_` : "";
+
+  const body = {
+    chat_id:    recipient.telegram_id,
+    text:       `💬 *${sender.first_name}* написал вам по объявлению «${listingTitle}»${preview}`,
+    parse_mode: "Markdown",
+    reply_markup: {
+      inline_keyboard: [[
+        {
+          text:    "Ответить в Svoi →",
+          web_app: { url: `${appUrl}/chats/${chatId}` },
+        },
+      ]],
+    },
+  };
+
+  await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method:  "POST",
+    headers: { "Content-Type": "application/json" },
+    body:    JSON.stringify(body),
+  });
 }
 
 // ─── Mark messages as read ────────────────────────────────────────────────────

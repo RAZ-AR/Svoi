@@ -1,18 +1,18 @@
-// Svoi — Login page for PWA/web (non-Telegram entry point)
+// Svoi — Login page: Telegram-only entry point
 "use client";
 
 import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTelegram } from "@/components/telegram/telegram-provider";
-import { useT } from "@/lib/i18n";
+
+const BOT_USERNAME = process.env.NEXT_PUBLIC_BOT_USERNAME ?? "svoi_belgrade_bot";
 
 export default function LoginPage() {
   const { isTelegram, initData } = useTelegram();
   const router = useRouter();
-  const t = useT();
 
-  // If Telegram becomes available after mount, go back to root to auto-auth
+  // If opened inside Telegram, go back to root to auto-auth
   useEffect(() => {
     if (isTelegram && initData) {
       router.replace("/");
@@ -21,67 +21,44 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-white px-6">
-      <div className="mb-12 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-gray-900">Svoi</h1>
-        <p className="mt-1 text-gray-400">{t("login.tagline")}</p>
+
+      {/* Logo */}
+      <div className="mb-10 text-center">
+        <h1 className="text-5xl font-black tracking-tight text-gray-900">Svoi</h1>
+        <p className="mt-1 text-gray-400">Свой базар в Белграде</p>
       </div>
 
-      <div className="w-full max-w-sm space-y-3">
-        <p className="mb-6 text-center text-sm text-gray-500">
-          {t("login.description")}
-        </p>
-
-        <GoogleLoginButton label={t("login.sign_in_google")} />
-
-        <p className="pt-2 text-center text-xs text-gray-300">
-          {t("login.tg_hint")}
-        </p>
+      {/* Card */}
+      <div className="w-full max-w-sm">
+        <div className="rounded-3xl bg-gray-50 px-6 py-8 text-center">
+          <div className="mb-4 text-5xl">✈️</div>
+          <p className="mb-2 text-lg font-semibold text-gray-900">
+            Открой через Telegram
+          </p>
+          <p className="mb-6 text-sm text-gray-500">
+            Svoi — мини-приложение внутри Telegram.
+            Открой бот и нажми «Запустить».
+          </p>
+          <a
+            href={`https://t.me/${BOT_USERNAME}`}
+            className="flex items-center justify-center gap-2 w-full rounded-2xl bg-[#2AABEE] px-6 py-4 text-sm font-semibold text-white transition-all active:scale-[0.97]"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+              <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 13.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.828.942z"/>
+            </svg>
+            Открыть @{BOT_USERNAME}
+          </a>
+        </div>
 
         {process.env.NODE_ENV === "development" && (
           <Link
             href="/home"
-            className="block pt-4 text-center text-xs text-gray-400 underline underline-offset-2"
+            className="mt-4 block text-center text-xs text-gray-400 underline underline-offset-2"
           >
             🛠 Dev: открыть без входа
           </Link>
         )}
       </div>
     </div>
-  );
-}
-
-function GoogleLoginButton({ label }: { label: string }) {
-  async function handleGoogleLogin() {
-    const { createClient } = await import("@/lib/supabase/client");
-    const supabase = createClient();
-
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={handleGoogleLogin}
-      className="
-        flex w-full items-center justify-center gap-3
-        rounded-2xl border border-gray-200 bg-white px-4 py-3.5
-        text-sm font-medium text-gray-700
-        shadow-sm transition-colors active:bg-gray-50
-      "
-    >
-      {/* Google logo */}
-      <svg width="18" height="18" viewBox="0 0 18 18">
-        <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
-        <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/>
-        <path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/>
-        <path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>
-      </svg>
-      {label}
-    </button>
   );
 }
