@@ -1,4 +1,4 @@
-// Svoi — Bottom navigation: dark floating pill (warm minimal style)
+// Svoi — Bottom navigation: liquid glass floating pill
 "use client";
 
 import Link from "next/link";
@@ -27,9 +27,19 @@ export function BottomNav() {
   }
 
   return (
-    /* Floating dark pill — centered, above safe area */
+    /* Liquid glass floating pill */
     <nav className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 pb-safe-bottom">
-      <div className="flex items-center gap-1 rounded-full bg-[#1A1A1A] px-4 py-3 shadow-2xl shadow-black/30">
+      <div
+        className="flex items-center gap-1 rounded-full px-4 py-3"
+        style={{
+          background: "rgba(255, 255, 255, 0.18)",
+          backdropFilter: "blur(24px) saturate(180%)",
+          WebkitBackdropFilter: "blur(24px) saturate(180%)",
+          border: "1px solid rgba(255, 255, 255, 0.35)",
+          boxShadow:
+            "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.5)",
+        }}
+      >
         {tabs.map((tab) => {
           const isActive = pathname.startsWith(tab.href) && tab.href !== "/listings/new";
           const Icon = tab.icon;
@@ -42,11 +52,11 @@ export function BottomNav() {
                 key={tab.href}
                 href={tab.href}
                 onClick={handleNewListing}
-                className="
-                  mx-1 flex h-11 w-11 items-center justify-center
-                  rounded-full bg-white/10 border border-white/20
-                  transition-transform active:scale-90
-                "
+                className="mx-1 flex h-11 w-11 items-center justify-center rounded-full transition-transform active:scale-90"
+                style={{
+                  background: "linear-gradient(135deg, #FF00B1, #c800a1)",
+                  boxShadow: "0 4px 16px rgba(255,0,177,0.45)",
+                }}
               >
                 <Plus size={20} className="text-white" strokeWidth={2.5} />
               </Link>
@@ -59,17 +69,21 @@ export function BottomNav() {
               href={tab.href}
               className="relative mx-0.5 flex h-11 w-11 items-center justify-center rounded-full transition-all active:scale-90"
             >
-              {/* Active: sand/gold circle background */}
+              {/* Active: pink pill background */}
               {isActive && (
-                <span className="absolute inset-0 rounded-full bg-[#C9B99A]" />
+                <span
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: "rgba(255, 0, 177, 0.18)",
+                    border: "1px solid rgba(255,0,177,0.35)",
+                  }}
+                />
               )}
 
               <Icon
                 size={20}
-                className={cn(
-                  "relative z-10 transition-colors",
-                  isActive ? "text-[#1A1A1A]" : "text-white/60"
-                )}
+                className={cn("relative z-10 transition-colors")}
+                style={{ color: isActive ? "#FF00B1" : "rgba(40,40,40,0.55)" }}
                 strokeWidth={isActive ? 2.5 : 1.8}
               />
 
