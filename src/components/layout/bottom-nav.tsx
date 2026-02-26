@@ -54,8 +54,8 @@ export function BottomNav() {
                 onClick={handleNewListing}
                 className="mx-1 flex h-11 w-11 items-center justify-center rounded-full transition-transform active:scale-90"
                 style={{
-                  background: "linear-gradient(135deg, #FF00B1, #c800a1)",
-                  boxShadow: "0 4px 16px rgba(255,0,177,0.45)",
+                  background: "linear-gradient(135deg, #03B2FF, #0090CC)",
+                  boxShadow: "0 4px 16px rgba(3,178,255,0.45)",
                 }}
               >
                 <Plus size={20} className="text-white" strokeWidth={2.5} />
@@ -69,13 +69,13 @@ export function BottomNav() {
               href={tab.href}
               className="relative mx-0.5 flex h-11 w-11 items-center justify-center rounded-full transition-all active:scale-90"
             >
-              {/* Active: pink pill background */}
+              {/* Active: blue pill background */}
               {isActive && (
                 <span
                   className="absolute inset-0 rounded-full"
                   style={{
-                    background: "rgba(255, 0, 177, 0.18)",
-                    border: "1px solid rgba(255,0,177,0.35)",
+                    background: "rgba(3, 178, 255, 0.18)",
+                    border: "1px solid rgba(3,178,255,0.35)",
                   }}
                 />
               )}
@@ -83,7 +83,7 @@ export function BottomNav() {
               <Icon
                 size={20}
                 className={cn("relative z-10 transition-colors")}
-                style={{ color: isActive ? "#FF00B1" : "rgba(40,40,40,0.55)" }}
+                style={{ color: isActive ? "#03B2FF" : "rgba(40,40,40,0.55)" }}
                 strokeWidth={isActive ? 2.5 : 1.8}
               />
 
