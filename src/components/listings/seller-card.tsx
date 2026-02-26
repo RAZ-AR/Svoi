@@ -9,11 +9,13 @@ interface SellerCardProps {
     first_name: string;
     telegram_username: string | null;
     avatar_url: string | null;
-  };
+  } | null;
   listingCount?: number;
 }
 
 export function SellerCard({ seller, listingCount }: SellerCardProps) {
+  if (!seller) return null;
+
   return (
     <Link
       href={`/users/${seller.id}`}

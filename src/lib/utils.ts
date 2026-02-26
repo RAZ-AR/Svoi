@@ -59,3 +59,13 @@ export const NOVI_BEOGRAD_BOUNDS = {
   sw: { lat: 44.776, lng: 20.372 },
   ne: { lat: 44.857, lng: 20.475 },
 } as const;
+
+
+/** Parse images field that may come from DB as JSON string or array */
+export function parseImages(raw: unknown): { url: string }[] {
+  if (Array.isArray(raw)) return raw as { url: string }[];
+  if (typeof raw === "string") {
+    try { return JSON.parse(raw); } catch { return []; }
+  }
+  return [];
+}

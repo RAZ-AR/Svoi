@@ -10,7 +10,7 @@ import { ListingGallery } from "@/components/listings/listing-gallery";
 import { ListingMap } from "@/components/listings/listing-map";
 import { ListingActions } from "@/components/listings/listing-actions";
 import { SellerCard } from "@/components/listings/seller-card";
-import { formatPrice, formatRelativeTime } from "@/lib/utils";
+import { formatPrice, formatRelativeTime, parseImages } from "@/lib/utils";
 import type { ListingWithUser } from "@/actions/listings";
 
 interface ListingDetailClientProps {
@@ -24,7 +24,7 @@ export function ListingDetailClient({ listing }: ListingDetailClientProps) {
   const handleBack = useCallback(() => router.back(), [router]);
   useTelegramBack(handleBack);
 
-  const images = (listing.images as { url: string }[]) ?? [];
+  const images = parseImages(listing.images);
   const isMine =
     auth.status === "authenticated" &&
     auth.user.id === listing.user_id;
@@ -69,7 +69,7 @@ export function ListingDetailClient({ listing }: ListingDetailClientProps) {
       <div className="flex flex-col gap-4 px-5 pb-4 pt-4">
 
         {/* Meta row: views + time */}
-        <div className="flex items-center gap-3 text-xs text-[#A89070]">
+        <div className="flex flex-wrap items-center gap-3 text-xs text-[#A89070]">
           <span className="flex items-center gap-1">
             <Eye size={12} />
             {listing.views}
@@ -83,6 +83,29 @@ export function ListingDetailClient({ listing }: ListingDetailClientProps) {
                 <MapPin size={10} />
                 {listing.address}
               </span>
+            </>
+          )}
+          {/* Attribution + verified badge for channel-imported listings */}
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {(listing as any).tg_channel && (
+            <>
+              <a
+                href={`https://t.me/${(listing as any).tg_channel}/${(listing as any).tg_message_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 rounded-full bg-[#E8F4F8] px-2.5 py-1 text-[11px] font-medium text-[#2D7A8F] hover:bg-[#D0EBF5]"
+              >
+                📌 Из @{(listing as any).tg_channel}
+              </a>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              {(listing as any).tg_author_verified && (
+                <span
+                  title="Автор регулярно публикует объявления"
+                  className="inline-flex items-center gap-0.5 rounded-full bg-[#E8F5E9] px-2.5 py-1 text-[11px] font-semibold text-[#2E7D32]"
+                >
+                  ✓ Активный автор
+                </span>
+              )}
             </>
           )}
         </div>

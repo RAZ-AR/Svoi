@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Eye, MoreHorizontal } from "lucide-react";
 import { ListingStatusBadge, ListingStatusSheet } from "./listing-status-sheet";
-import { formatPrice, formatRelativeTime } from "@/lib/utils";
+import { formatPrice, formatRelativeTime, parseImages } from "@/lib/utils";
 import type { ListingWithUser } from "@/actions/listings";
 
 interface MyListingCardProps {
@@ -15,8 +15,8 @@ interface MyListingCardProps {
 
 export function MyListingCard({ listing }: MyListingCardProps) {
   const [sheetOpen, setSheetOpen] = useState(false);
-  const images = listing.images as { url: string }[];
-  const cover  = images?.[0]?.url;
+  const images = parseImages(listing.images);
+  const cover  = images[0]?.url;
 
   return (
     <>

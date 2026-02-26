@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Heart } from "lucide-react";
-import { cn, formatPrice, formatRelativeTime } from "@/lib/utils";
+import { cn, formatPrice, formatRelativeTime, parseImages } from "@/lib/utils";
 import type { ListingWithUser } from "@/actions/listings";
 
 interface ListingCardProps {
@@ -20,7 +20,7 @@ export function ListingCard({
   onFavoriteToggle,
   className,
 }: ListingCardProps) {
-  const images = listing.images as { url: string }[];
+  const images = parseImages(listing.images);
   const coverImage = images?.[0]?.url;
 
   return (
@@ -77,6 +77,45 @@ export function ListingCard({
           <p className="truncate text-xs text-[#A89070]">
             {listing.address}
           </p>
+        )}
+        {/* Attribution + verified badge for channel-imported listings */}
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        {(listing as any).tg_channel && (
+          <div className="mt-1 flex flex-wrap items-center gap-1">
+            {/* Primary channel tag */}
+            <a
+              href={`https://t.me/${(listing as any).tg_channel}/${(listing as any).tg_message_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-0.5 rounded-full bg-[#E8F4F8] px-2 py-0.5 text-[10px] font-medium text-[#2D7A8F] hover:bg-[#D0EBF5]"
+            >
+              📌 @{(listing as any).tg_channel}
+            </a>
+            {/* Additional channel tags (cross-posted) */}
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {((): { channel: string; message_id: number }[] => { const r = (listing as any).tg_sources; return Array.isArray(r) ? r : (typeof r === "string" ? JSON.parse(r) : []); })().map((src) => (
+              <a
+                key={src.channel}
+                href={`https://t.me/${src.channel}/${src.message_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="inline-flex items-center gap-0.5 rounded-full bg-[#E8F4F8] px-2 py-0.5 text-[10px] font-medium text-[#2D7A8F] hover:bg-[#D0EBF5]"
+              >
+                📌 @{src.channel}
+              </a>
+            ))}
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {(listing as any).tg_author_verified && (
+              <span
+                title="Активный автор"
+                className="inline-flex items-center rounded-full bg-[#E8F5E9] px-1.5 py-0.5 text-[10px] font-semibold text-[#2E7D32]"
+              >
+                ✓ Активный
+              </span>
+            )}
+          </div>
         )}
       </div>
     </Link>

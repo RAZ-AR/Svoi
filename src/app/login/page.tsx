@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useTelegram } from "@/components/telegram/telegram-provider";
 import { useT } from "@/lib/i18n";
@@ -35,6 +36,15 @@ export default function LoginPage() {
         <p className="pt-2 text-center text-xs text-gray-300">
           {t("login.tg_hint")}
         </p>
+
+        {process.env.NODE_ENV === "development" && (
+          <Link
+            href="/home"
+            className="block pt-4 text-center text-xs text-gray-400 underline underline-offset-2"
+          >
+            🛠 Dev: открыть без входа
+          </Link>
+        )}
       </div>
     </div>
   );

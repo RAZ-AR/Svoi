@@ -11,7 +11,12 @@
     "db:push": "supabase db push",
     "db:types": "supabase gen types typescript --local > src/lib/supabase/database.types.ts",
     "meili:setup": "npx tsx scripts/setup-meilisearch.ts",
-    "seed": "npx tsx scripts/seed-listings.ts"
+    "seed": "npx tsx scripts/seed-listings.ts",
+    "tg:session": "npx tsx scripts/tg-session.ts",
+    "tg:import": "npx tsx scripts/import-tg-scrape.ts",
+    "tg:import:export": "npx tsx scripts/import-tg-export.ts",
+    "tg:notify": "npx tsx scripts/notify-tg-authors.ts",
+    "tg:notify:dry": "npx tsx scripts/notify-tg-authors.ts --dry-run"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.0",
@@ -42,6 +47,7 @@
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.0",
+    "telegram": "^2.22.2",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

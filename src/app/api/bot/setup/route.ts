@@ -23,7 +23,7 @@ export async function GET() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         url:             webhookUrl,
-        allowed_updates: ["message"],
+        allowed_updates: ["message", "channel_post", "callback_query"],
       }),
     }
   );
