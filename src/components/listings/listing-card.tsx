@@ -78,6 +78,9 @@ export function ListingCard({
             {listing.address}
           </p>
         )}
+        <p className="text-[10px] text-[#BBBBBB] mt-0.5">
+          {formatRelativeTime(listing.created_at)}
+        </p>
         {/* Attribution + verified badge for channel-imported listings */}
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {(listing as any).tg_channel && (
